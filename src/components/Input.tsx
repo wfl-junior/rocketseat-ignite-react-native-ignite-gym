@@ -10,9 +10,14 @@ export const Input: React.FC<InputProps> = props => (
     bg="gray.700"
     fontSize="md"
     color="white"
-    borderWidth={0}
+    borderWidth={2}
     fontFamily="body"
+    borderColor="gray.700"
     placeholderTextColor="gray.300"
+    _focus={{
+      bg: "gray.700",
+      borderColor: "green.500",
+    }}
     {...props}
   />
 );
