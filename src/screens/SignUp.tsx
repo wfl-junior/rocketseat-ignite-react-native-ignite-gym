@@ -4,9 +4,9 @@ import Logo from "~/assets/logo.svg";
 import { Button } from "~/components/Button";
 import { Input } from "~/components/Input";
 
-interface SignInProps {}
+interface SignUpProps {}
 
-export const SignIn: React.FC<SignInProps> = () => (
+export const SignUp: React.FC<SignUpProps> = () => (
   <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
     <VStack flex={1} bg="gray.700" px={10} pb={16}>
       <Image
@@ -26,8 +26,10 @@ export const SignIn: React.FC<SignInProps> = () => (
 
       <Center>
         <Heading color="gray.100" fontSize="xl" mb={6}>
-          Acesse sua conta
+          Crie sua conta
         </Heading>
+
+        <Input placeholder="Nome" autoCapitalize="words" />
 
         <Input
           placeholder="E-mail"
@@ -36,16 +38,17 @@ export const SignIn: React.FC<SignInProps> = () => (
         />
 
         <Input placeholder="Senha" secureTextEntry autoCapitalize="none" />
-        <Button variant="solid" title="Acessar" />
+
+        <Input
+          placeholder="Confirme a Senha"
+          secureTextEntry
+          autoCapitalize="none"
+        />
+
+        <Button variant="solid" title="Criar e acessar" />
       </Center>
 
-      <Center mt={24}>
-        <Text color="gray.100" fontSize="sm" mb={3}>
-          Ainda não tem acesso?
-        </Text>
-
-        <Button variant="outline" title="Criar conta" />
-      </Center>
+      <Button mt={16} variant="outline" title="Voltar para o login" />
     </VStack>
   </ScrollView>
 );
