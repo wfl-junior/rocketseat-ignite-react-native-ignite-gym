@@ -37,5 +37,10 @@ export const SignIn: React.FC<SignInProps> = () => (
       <Input placeholder="Senha" secureTextEntry autoCapitalize="none" />
       <Button title="Acessar" />
     </Center>
+
+    <Center mt="auto">
+      <Text color="gray.100">Ainda não tem acesso?</Text>
+      <Button title="Criar conta" variant="outline" />
+    </Center>
   </VStack>
 );
