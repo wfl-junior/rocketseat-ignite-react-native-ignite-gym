@@ -3,8 +3,9 @@ import {
   Roboto_700Bold,
   useFonts,
 } from "@expo-google-fonts/roboto";
-import { Box, NativeBaseProvider, Text } from "native-base";
+import { Center, NativeBaseProvider, Text } from "native-base";
 import { StatusBar } from "react-native";
+import { Loading } from "~/components/Loading";
 
 const App: React.FC = () => {
   const [areFontsReady] = useFonts({
@@ -14,24 +15,21 @@ const App: React.FC = () => {
 
   return (
     <NativeBaseProvider>
-      <Box
-        flex={1}
-        backgroundColor="#202024"
-        alignItems="center"
-        justifyContent="center"
-      >
+      <Center flex={1} backgroundColor="#202024">
         <StatusBar
           translucent
           barStyle="light-content"
           backgroundColor="transparent"
         />
 
-        {areFontsReady && (
+        {areFontsReady ? (
           <Text fontFamily="Roboto_700Bold" color="white" fontSize={36}>
             Hello World
           </Text>
+        ) : (
+          <Loading />
         )}
-      </Box>
+      </Center>
     </NativeBaseProvider>
   );
 };
