@@ -4,6 +4,6 @@ interface ExerciseProps {}
 
 export const Exercise: React.FC<ExerciseProps> = () => (
   <Center flex={1}>
-    <Text>Exercise</Text>
+    <Text color="white">Exercise</Text>
   </Center>
 );

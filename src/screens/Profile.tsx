@@ -4,6 +4,6 @@ interface ProfileProps {}
 
 export const Profile: React.FC<ProfileProps> = () => (
   <Center flex={1}>
-    <Text>Profile</Text>
+    <Text color="white">Profile</Text>
   </Center>
 );

@@ -4,6 +4,6 @@ interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = () => (
   <Center flex={1}>
-    <Text>Home</Text>
+    <Text color="white">Home</Text>
   </Center>
 );

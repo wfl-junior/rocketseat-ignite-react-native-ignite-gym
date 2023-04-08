@@ -4,6 +4,6 @@ interface HistoryProps {}
 
 export const History: React.FC<HistoryProps> = () => (
   <Center flex={1}>
-    <Text>History</Text>
+    <Text color="white">History</Text>
   </Center>
 );
