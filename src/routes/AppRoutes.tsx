@@ -3,17 +3,16 @@ import {
   createBottomTabNavigator,
 } from "@react-navigation/bottom-tabs";
 import { useTheme } from "native-base";
+import { Platform } from "react-native";
 import HistoryIcon from "~/assets/history.svg";
 import HomeIcon from "~/assets/home.svg";
 import ProfileIcon from "~/assets/profile.svg";
-import { Exercise } from "~/screens/Exercise";
 import { History } from "~/screens/History";
-import { Home } from "~/screens/Home";
 import { Profile } from "~/screens/Profile";
+import { HomeRoutes } from "./HomeRoutes";
 
 type AppRoutesParamList = {
   home: undefined;
-  exercise: undefined;
   history: undefined;
   profile: undefined;
 };
@@ -37,11 +36,18 @@ export const AppRoutes: React.FC<AppRoutesProps> = () => {
         tabBarShowLabel: false,
         tabBarActiveTintColor: colors.green[500],
         tabBarInactiveTintColor: colors.gray[200],
+        tabBarStyle: {
+          borderTopWidth: 0,
+          paddingTop: sizes[6],
+          paddingBottom: sizes[10],
+          backgroundColor: colors.gray[600],
+          height: Platform.OS === "android" ? "auto" : 96,
+        },
       }}
     >
       <Screen
         name="home"
-        component={Home}
+        component={HomeRoutes}
         options={{
           tabBarIcon: ({ color }) => (
             <HomeIcon fill={color} width={iconSize} height={iconSize} />
@@ -68,8 +74,6 @@ export const AppRoutes: React.FC<AppRoutesProps> = () => {
           ),
         }}
       />
-
-      <Screen name="exercise" component={Exercise} />
     </Navigator>
   );
 };
