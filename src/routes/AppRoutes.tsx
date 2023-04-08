@@ -1,18 +1,23 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  BottomTabNavigationProp,
+  createBottomTabNavigator,
+} from "@react-navigation/bottom-tabs";
+import { Exercise } from "~/screens/Exercise";
 import { History } from "~/screens/History";
 import { Home } from "~/screens/Home";
 import { Profile } from "~/screens/Profile";
 
-type IAppRoutes = {
+type AppRoutesParamList = {
   home: undefined;
+  exercise: undefined;
   history: undefined;
   profile: undefined;
 };
 
-export type AppNavigatorRoutesProps = NativeStackNavigationProp<IAppRoutes>;
+export type AppNavigatorRoutesProps =
+  BottomTabNavigationProp<AppRoutesParamList>;
 
-const { Navigator, Screen } = createBottomTabNavigator<IAppRoutes>();
+const { Navigator, Screen } = createBottomTabNavigator<AppRoutesParamList>();
 
 interface AppRoutesProps {}
 
@@ -21,5 +26,6 @@ export const AppRoutes: React.FC<AppRoutesProps> = () => (
     <Screen name="home" component={Home} />
     <Screen name="history" component={History} />
     <Screen name="profile" component={Profile} />
+    <Screen name="exercise" component={Exercise} />
   </Navigator>
 );
