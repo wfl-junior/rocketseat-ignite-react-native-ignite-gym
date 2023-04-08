@@ -6,7 +6,7 @@ import {
 import { NativeBaseProvider } from "native-base";
 import { StatusBar } from "react-native";
 import { Loading } from "~/components/Loading";
-import { SignUp } from "~/screens/SignUp";
+import { Routes } from "~/routes";
 import { THEME } from "~/theme";
 
 const App: React.FC = () => {
@@ -23,7 +23,7 @@ const App: React.FC = () => {
         backgroundColor="transparent"
       />
 
-      {areFontsReady ? <SignUp /> : <Loading />}
+      {areFontsReady ? <Routes /> : <Loading />}
     </NativeBaseProvider>
   );
 };
