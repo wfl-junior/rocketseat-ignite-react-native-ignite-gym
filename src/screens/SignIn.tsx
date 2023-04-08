@@ -1,6 +1,7 @@
 import { Center, Heading, Image, Text, VStack } from "native-base";
 import backgroundImage from "~/assets/background.png";
 import Logo from "~/assets/logo.svg";
+import { Button } from "~/components/Button";
 import { Input } from "~/components/Input";
 
 interface SignInProps {}
@@ -34,6 +35,7 @@ export const SignIn: React.FC<SignInProps> = () => (
       />
 
       <Input placeholder="Senha" secureTextEntry autoCapitalize="none" />
+      <Button title="Acessar" />
     </Center>
   </VStack>
 );
