@@ -6,7 +6,7 @@ import { Input } from "~/components/Input";
 interface SignInProps {}
 
 export const SignIn: React.FC<SignInProps> = () => (
-  <VStack flex={1} bg="gray.700">
+  <VStack flex={1} bg="gray.700" px={10}>
     <Image
       position="absolute"
       resizeMode="contain"
@@ -22,13 +22,18 @@ export const SignIn: React.FC<SignInProps> = () => (
       </Text>
     </Center>
 
-    <Center px={10}>
+    <Center>
       <Heading color="gray.100" fontSize="xl" mb={6}>
         Acesse sua conta
       </Heading>
 
-      <Input placeholder="E-mail" />
-      <Input placeholder="Senha" />
+      <Input
+        placeholder="E-mail"
+        autoCapitalize="none"
+        keyboardType="email-address"
+      />
+
+      <Input placeholder="Senha" secureTextEntry autoCapitalize="none" />
     </Center>
   </VStack>
 );
