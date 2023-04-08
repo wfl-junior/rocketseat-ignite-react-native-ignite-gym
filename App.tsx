@@ -1,18 +1,9 @@
+import {
+  Roboto_400Regular,
+  Roboto_700Bold,
+  useFonts,
+} from "@expo-google-fonts/roboto";
 import { StatusBar, StyleSheet, Text, View } from "react-native";
-
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <StatusBar
-        translucent
-        barStyle="dark-content"
-        backgroundColor="transparent"
-      />
-
-      <Text>Hello World</Text>
-    </View>
-  );
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -22,3 +13,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+const App: React.FC = () => {
+  const [areFontsReady] = useFonts({
+    Roboto_400Regular,
+    Roboto_700Bold,
+  });
+
+  return (
+    <View style={styles.container}>
+      <StatusBar
+        translucent
+        barStyle="dark-content"
+        backgroundColor="transparent"
+      />
+
+      {areFontsReady && <Text>Hello World</Text>}
+    </View>
+  );
+};
+
+export default App;
