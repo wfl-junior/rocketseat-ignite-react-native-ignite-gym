@@ -2,9 +2,14 @@ import { IButtonProps, Button as NativeBaseButton, Text } from "native-base";
 
 interface ButtonProps extends IButtonProps {
   title: string;
+  variant?: "solid" | "outline";
 }
 
-export const Button: React.FC<ButtonProps> = ({ title, variant, ...props }) => (
+export const Button: React.FC<ButtonProps> = ({
+  title,
+  variant = "solid",
+  ...props
+}) => (
   <NativeBaseButton
     h={14}
     w="full"
