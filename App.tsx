@@ -3,9 +3,10 @@ import {
   Roboto_700Bold,
   useFonts,
 } from "@expo-google-fonts/roboto";
-import { NativeBaseProvider, Text } from "native-base";
+import { NativeBaseProvider } from "native-base";
 import { StatusBar } from "react-native";
 import { Loading } from "~/components/Loading";
+import { SignIn } from "~/screens/SignIn";
 import { THEME } from "~/theme";
 
 const App: React.FC = () => {
@@ -22,13 +23,7 @@ const App: React.FC = () => {
         backgroundColor="transparent"
       />
 
-      {areFontsReady ? (
-        <Text fontFamily="Roboto_700Bold" color="white" fontSize={36}>
-          Hello World
-        </Text>
-      ) : (
-        <Loading />
-      )}
+      {areFontsReady ? <SignIn /> : <Loading />}
     </NativeBaseProvider>
   );
 };
