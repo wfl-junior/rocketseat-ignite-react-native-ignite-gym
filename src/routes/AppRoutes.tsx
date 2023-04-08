@@ -22,7 +22,7 @@ const { Navigator, Screen } = createBottomTabNavigator<AppRoutesParamList>();
 interface AppRoutesProps {}
 
 export const AppRoutes: React.FC<AppRoutesProps> = () => (
-  <Navigator screenOptions={{ headerShown: false }}>
+  <Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
     <Screen name="home" component={Home} />
     <Screen name="history" component={History} />
     <Screen name="profile" component={Profile} />
