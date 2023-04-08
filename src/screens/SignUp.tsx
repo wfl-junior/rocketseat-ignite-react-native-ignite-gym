@@ -8,7 +8,7 @@ interface SignUpProps {}
 
 export const SignUp: React.FC<SignUpProps> = () => (
   <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-    <VStack flex={1} bg="gray.700" px={10} pb={16}>
+    <VStack flex={1} px={10} pb={16}>
       <Image
         position="absolute"
         resizeMode="contain"
