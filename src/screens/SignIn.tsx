@@ -21,6 +21,7 @@ export const SignIn: React.FC<SignInProps> = () => {
           position="absolute"
           resizeMode="contain"
           source={backgroundImage}
+          defaultSource={backgroundImage}
           alt="Pessoas treinando em uma academia"
         />
 

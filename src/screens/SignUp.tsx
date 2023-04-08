@@ -17,6 +17,7 @@ export const SignUp: React.FC<SignUpProps> = () => {
           position="absolute"
           resizeMode="contain"
           source={backgroundImage}
+          defaultSource={backgroundImage}
           alt="Pessoas treinando em uma academia"
         />
 
