@@ -2,12 +2,12 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from "@react-navigation/native-stack";
-import { Exercise } from "~/screens/Exercise";
+import { Exercise, ExerciseParams } from "~/screens/Exercise";
 import { Home } from "~/screens/Home";
 
 type HomeRoutesParamList = {
   default: undefined;
-  exercise: undefined;
+  exercise: ExerciseParams;
 };
 
 export type HomeNavigatorRoutesProps =

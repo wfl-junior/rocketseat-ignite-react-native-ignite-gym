@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ExerciseCard } from "~/components/ExerciseCard";
 import { Group } from "~/components/Group";
 import { HomeHeader } from "~/components/HomeHeader";
+import { useHomeStackNavigation } from "~/hooks/useHomeStackNavigation";
 
 export interface Exercise {
   id: string;
@@ -20,6 +21,7 @@ enum GroupType {
 interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = () => {
+  const { navigate } = useHomeStackNavigation();
   const [groups, setGroups] = useState(() => Object.values(GroupType));
   const [selectedGroup, setSelectedGroup] = useState(GroupType.Costas);
   const [exercises, setExercises] = useState<Exercise[]>(() => [
@@ -48,6 +50,12 @@ export const Home: React.FC<HomeProps> = () => {
   function handleSelectGroup(group: GroupType) {
     return () => {
       setSelectedGroup(group);
+    };
+  }
+
+  function handleOpenExerciseDetails(id: string) {
+    return () => {
+      navigate("exercise", { id });
     };
   }
 
@@ -88,7 +96,10 @@ export const Home: React.FC<HomeProps> = () => {
           _contentContainerStyle={{ pb: 20 }}
           keyExtractor={exercise => exercise.id}
           renderItem={({ item: exercise }) => (
-            <ExerciseCard exercise={exercise} />
+            <ExerciseCard
+              exercise={exercise}
+              onPress={handleOpenExerciseDetails(exercise.id)}
+            />
           )}
         />
       </VStack>
