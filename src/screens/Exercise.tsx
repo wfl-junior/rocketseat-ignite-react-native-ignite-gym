@@ -1,6 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { HStack, Heading, Icon, Text, VStack } from "native-base";
+import { HStack, Heading, Icon, Image, Text, VStack } from "native-base";
 import { TouchableOpacity } from "react-native";
 import BodyIcon from "~/assets/body.svg";
 
@@ -33,6 +33,20 @@ export const Exercise: React.FC<ExerciseProps> = () => {
             </Text>
           </HStack>
         </HStack>
+      </VStack>
+
+      <VStack p={8}>
+        <Image
+          h={80}
+          mb={3}
+          w="full"
+          rounded="lg"
+          resizeMode="cover"
+          alt="Imagem do exercício"
+          source={{
+            uri: "https://blog.totalpass.com.br/wp-content/uploads/2022/12/treino-de-costas-remada-unilateral.jpg",
+          }}
+        />
       </VStack>
     </VStack>
   );
