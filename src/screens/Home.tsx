@@ -65,6 +65,7 @@ export const Home: React.FC<HomeProps> = () => {
 
       <FlatList
         my={10}
+        minH={10}
         maxH={10}
         horizontal
         data={groups}

@@ -18,7 +18,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
         h={16}
         mr={4}
         rounded="md"
-        resizeMode="center"
+        resizeMode="cover"
         alt="Imagem do exercício"
         source={{
           uri: "https://blog.totalpass.com.br/wp-content/uploads/2022/12/treino-de-costas-remada-unilateral.jpg",
