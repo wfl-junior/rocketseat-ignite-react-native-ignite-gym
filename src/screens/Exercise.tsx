@@ -3,6 +3,9 @@ import { useNavigation } from "@react-navigation/native";
 import { HStack, Heading, Icon, Image, Text, VStack } from "native-base";
 import { TouchableOpacity } from "react-native";
 import BodyIcon from "~/assets/body.svg";
+import RepetiotionsIcon from "~/assets/repetitions.svg";
+import SeriesIcon from "~/assets/series.svg";
+import { Button } from "~/components/Button";
 
 export interface ExerciseParams {
   id: string;
@@ -47,6 +50,28 @@ export const Exercise: React.FC<ExerciseProps> = () => {
             uri: "https://blog.totalpass.com.br/wp-content/uploads/2022/12/treino-de-costas-remada-unilateral.jpg",
           }}
         />
+
+        <VStack bg="gray.600" rounded="md" p={4} pt={5}>
+          <HStack alignItems="center" justifyContent="space-around" mb={6}>
+            <HStack>
+              <SeriesIcon />
+
+              <Text color="gray.200" ml={2}>
+                3 séries
+              </Text>
+            </HStack>
+
+            <HStack>
+              <RepetiotionsIcon />
+
+              <Text color="gray.200" ml={2}>
+                12 repetições
+              </Text>
+            </HStack>
+          </HStack>
+
+          <Button title="Marcar como realizado" />
+        </VStack>
       </VStack>
     </VStack>
   );
