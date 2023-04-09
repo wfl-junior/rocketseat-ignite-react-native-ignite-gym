@@ -2,7 +2,7 @@ import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import { Center, Heading, ScrollView, Skeleton, VStack } from "native-base";
 import { useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { Alert, TouchableOpacity } from "react-native";
 import { Button } from "~/components/Button";
 import { Input } from "~/components/Input";
 import { ScreenHeader } from "~/components/ScreenHeader";
@@ -34,7 +34,12 @@ export const Profile: React.FC<ProfileProps> = () => {
       if (!asset) return;
       const photoInfo = await FileSystem.getInfoAsync(asset.uri);
 
-      console.log(photoInfo);
+      if (photoInfo.exists && photoInfo.size / Math.pow(1024, 2) > 5) {
+        return Alert.alert(
+          "Imagem",
+          "Essa imagem é muito grande. Escolha uma de até 5MB.",
+        );
+      }
 
       setUserPhoto(asset.uri);
     } catch (error) {
