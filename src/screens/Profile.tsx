@@ -56,6 +56,12 @@ export const Profile: React.FC<ProfileProps> = () => {
       setUserPhoto(asset.uri);
     } catch (error) {
       console.error(error);
+
+      toast.show({
+        bg: "red.500",
+        placement: "top",
+        title: "Ocorreu um erro inesperado.",
+      });
     } finally {
       setIsPhotoLoading(false);
     }
