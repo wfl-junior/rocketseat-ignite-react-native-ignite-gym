@@ -1,8 +1,15 @@
 import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
-import { Center, Heading, ScrollView, Skeleton, VStack } from "native-base";
+import {
+  Center,
+  Heading,
+  ScrollView,
+  Skeleton,
+  VStack,
+  useToast,
+} from "native-base";
 import { useState } from "react";
-import { Alert, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Button } from "~/components/Button";
 import { Input } from "~/components/Input";
 import { ScreenHeader } from "~/components/ScreenHeader";
@@ -13,6 +20,7 @@ const photoSize = 33;
 interface ProfileProps {}
 
 export const Profile: React.FC<ProfileProps> = () => {
+  const toast = useToast();
   const [isPhotoLoading, setIsPhotoLoading] = useState(false);
   const [userPhoto, setUserPhoto] = useState(
     "https://github.com/wfl-junior.png",
@@ -34,11 +42,15 @@ export const Profile: React.FC<ProfileProps> = () => {
       if (!asset) return;
       const photoInfo = await FileSystem.getInfoAsync(asset.uri);
 
-      if (photoInfo.exists && photoInfo.size / Math.pow(1024, 2) > 5) {
-        return Alert.alert(
-          "Imagem",
-          "Essa imagem é muito grande. Escolha uma de até 5MB.",
-        );
+      if (
+        photoInfo.exists &&
+        photoInfo.size / Math.pow(1024, 2) > 5 /* 5MB */
+      ) {
+        return toast.show({
+          bg: "red.500",
+          placement: "top",
+          title: "Essa imagem é muito grande. Escolha uma de até 5MB.",
+        });
       }
 
       setUserPhoto(asset.uri);
