@@ -1,9 +1,10 @@
-import { Center, Text } from "native-base";
+import { VStack } from "native-base";
+import { ScreenHeader } from "~/components/ScreenHeader";
 
 interface HistoryProps {}
 
 export const History: React.FC<HistoryProps> = () => (
-  <Center flex={1}>
-    <Text color="white">History</Text>
-  </Center>
+  <VStack flex={1}>
+    <ScreenHeader title="Histórico de Exercícios" />
+  </VStack>
 );
