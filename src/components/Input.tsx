@@ -1,21 +1,26 @@
 import { IInputProps, Input as NativeBaseInput } from "native-base";
 
-interface InputProps extends IInputProps {}
+interface InputProps extends IInputProps {
+  variant?: "primary" | "secondary";
+}
 
-export const Input: React.FC<InputProps> = props => (
+export const Input: React.FC<InputProps> = ({
+  variant = "primary",
+  ...props
+}) => (
   <NativeBaseInput
     h={14}
     px={4}
     mb={4}
-    bg="gray.700"
     fontSize="md"
     color="white"
     borderWidth={2}
     fontFamily="body"
-    borderColor="gray.700"
     placeholderTextColor="gray.300"
+    bg={variant === "primary" ? "gray.700" : "gray.600"}
+    borderColor={variant === "primary" ? "gray.700" : "gray.600"}
     _focus={{
-      bg: "gray.700",
+      bg: variant === "primary" ? "gray.700" : "gray.600",
       borderColor: "green.500",
     }}
     {...props}

@@ -1,6 +1,7 @@
 import { Center, Heading, ScrollView, Skeleton, VStack } from "native-base";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
+import { Input } from "~/components/Input";
 import { ScreenHeader } from "~/components/ScreenHeader";
 import { UserPhoto } from "~/components/UserPhoto";
 
@@ -38,6 +39,19 @@ export const Profile: React.FC<ProfileProps> = () => {
               Alterar foto
             </Heading>
           </TouchableOpacity>
+
+          <Input
+            placeholder="Nome"
+            variant="secondary"
+            autoCapitalize="words"
+          />
+
+          <Input
+            isDisabled
+            variant="secondary"
+            placeholder="E-mail"
+            autoCapitalize="words"
+          />
         </Center>
       </ScrollView>
     </VStack>
