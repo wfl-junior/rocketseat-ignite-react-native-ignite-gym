@@ -1,3 +1,4 @@
+import * as ImagePicker from "expo-image-picker";
 import { Center, Heading, ScrollView, Skeleton, VStack } from "native-base";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
@@ -12,6 +13,10 @@ interface ProfileProps {}
 
 export const Profile: React.FC<ProfileProps> = () => {
   const [isPhotoLoading, setIsPhotoLoading] = useState(false);
+
+  async function handleSelectPhoto() {
+    await ImagePicker.launchImageLibraryAsync();
+  }
 
   return (
     <VStack flex={1}>
@@ -35,7 +40,7 @@ export const Profile: React.FC<ProfileProps> = () => {
             />
           )}
 
-          <TouchableOpacity activeOpacity={0.6}>
+          <TouchableOpacity activeOpacity={0.6} onPress={handleSelectPhoto}>
             <Heading color="green.500" fontSize="md" mt={2} mb={8}>
               Alterar foto
             </Heading>
