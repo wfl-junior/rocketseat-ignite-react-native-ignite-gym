@@ -18,15 +18,25 @@ export const Profile: React.FC<ProfileProps> = () => {
   );
 
   async function handleSelectPhoto() {
-    const selectedPhoto = await ImagePicker.launchImageLibraryAsync({
-      quality: 1,
-      aspect: [4, 4],
-      allowsEditing: true,
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    });
+    setIsPhotoLoading(true);
 
-    if (selectedPhoto.canceled) return;
-    setUserPhoto(selectedPhoto.assets[0].uri);
+    try {
+      const selectedPhoto = await ImagePicker.launchImageLibraryAsync({
+        quality: 1,
+        aspect: [4, 4],
+        allowsEditing: true,
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      });
+
+      if (selectedPhoto.canceled) return;
+      const asset = selectedPhoto.assets.at(0);
+      if (!asset) return;
+      setUserPhoto(asset.uri);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsPhotoLoading(false);
+    }
   }
 
   return (
