@@ -15,7 +15,12 @@ export const Profile: React.FC<ProfileProps> = () => {
   const [isPhotoLoading, setIsPhotoLoading] = useState(false);
 
   async function handleSelectPhoto() {
-    await ImagePicker.launchImageLibraryAsync();
+    await ImagePicker.launchImageLibraryAsync({
+      quality: 1,
+      aspect: [4, 4],
+      allowsEditing: true,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    });
   }
 
   return (
