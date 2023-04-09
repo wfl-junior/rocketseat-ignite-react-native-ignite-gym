@@ -1,3 +1,4 @@
+import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import { Center, Heading, ScrollView, Skeleton, VStack } from "native-base";
 import { useState } from "react";
@@ -31,6 +32,10 @@ export const Profile: React.FC<ProfileProps> = () => {
       if (selectedPhoto.canceled) return;
       const asset = selectedPhoto.assets.at(0);
       if (!asset) return;
+      const photoInfo = await FileSystem.getInfoAsync(asset.uri);
+
+      console.log(photoInfo);
+
       setUserPhoto(asset.uri);
     } catch (error) {
       console.error(error);
