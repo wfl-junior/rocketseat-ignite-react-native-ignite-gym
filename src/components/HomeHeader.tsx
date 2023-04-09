@@ -14,7 +14,7 @@ export const HomeHeader: React.FC<HomeHeaderProps> = () => (
       source={{ uri: "https://github.com/wfl-junior.png" }}
     />
 
-    <VStack>
+    <VStack flex={1}>
       <Text color="gray.100" fontSize="md">
         Olá,
       </Text>
