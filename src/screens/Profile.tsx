@@ -17,7 +17,7 @@ export const Profile: React.FC<ProfileProps> = () => {
     <VStack flex={1}>
       <ScreenHeader title="Perfil" />
 
-      <ScrollView>
+      <ScrollView _contentContainerStyle={{ pb: 9 }}>
         <Center mt={6} px={10}>
           {isPhotoLoading ? (
             <Skeleton
@@ -56,7 +56,7 @@ export const Profile: React.FC<ProfileProps> = () => {
           />
         </Center>
 
-        <VStack px={10} mt={12} mb={9}>
+        <VStack px={10} mt={12}>
           <Heading color="gray.200" fontSize="md" mb={2}>
             Alterar senha
           </Heading>
