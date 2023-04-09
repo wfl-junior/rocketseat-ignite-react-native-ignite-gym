@@ -79,7 +79,7 @@ export const Home: React.FC<HomeProps> = () => {
           </Heading>
 
           <Text color="gray.200" fontSize="sm">
-            4
+            {exercises.length}
           </Text>
         </HStack>
 
