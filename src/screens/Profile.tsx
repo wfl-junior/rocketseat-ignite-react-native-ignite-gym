@@ -1,5 +1,6 @@
-import { Center, ScrollView, Skeleton, VStack } from "native-base";
+import { Center, Heading, ScrollView, Skeleton, VStack } from "native-base";
 import { useState } from "react";
+import { TouchableOpacity } from "react-native";
 import { ScreenHeader } from "~/components/ScreenHeader";
 import { UserPhoto } from "~/components/UserPhoto";
 
@@ -31,6 +32,12 @@ export const Profile: React.FC<ProfileProps> = () => {
               source={{ uri: "https://github.com/wfl-junior.png" }}
             />
           )}
+
+          <TouchableOpacity activeOpacity={0.6}>
+            <Heading color="green.500" fontSize="md" mt={2} mb={8}>
+              Alterar foto
+            </Heading>
+          </TouchableOpacity>
         </Center>
       </ScrollView>
     </VStack>
