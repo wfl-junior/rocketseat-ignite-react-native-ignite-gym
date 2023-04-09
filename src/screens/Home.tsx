@@ -1,32 +1,47 @@
-import { HStack, VStack } from "native-base";
+import { FlatList, VStack } from "native-base";
 import { useState } from "react";
 import { Group } from "~/components/Group";
 import { HomeHeader } from "~/components/HomeHeader";
 
 enum GroupType {
   Costas = "Costas",
+  Biceps = "Bíceps",
+  Triceps = "Tríceps",
   Ombro = "Ombro",
 }
 
 interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = () => {
+  const [groups, setGroups] = useState(() => Object.values(GroupType));
   const [selectedGroup, setSelectedGroup] = useState(GroupType.Costas);
+
+  function handleSelectGroup(group: GroupType) {
+    return () => {
+      setSelectedGroup(group);
+    };
+  }
 
   return (
     <VStack flex={1}>
       <HomeHeader />
 
-      <HStack>
-        {Object.values(GroupType).map(group => (
+      <FlatList
+        my={10}
+        maxH={10}
+        horizontal
+        data={groups}
+        keyExtractor={group => group}
+        _contentContainerStyle={{ px: 8 }}
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item: group }) => (
           <Group
-            key={group}
             name={group}
             isActive={selectedGroup === group}
-            onPress={() => setSelectedGroup(group)}
+            onPress={handleSelectGroup(group)}
           />
-        ))}
-      </HStack>
+        )}
+      />
     </VStack>
   );
 };
