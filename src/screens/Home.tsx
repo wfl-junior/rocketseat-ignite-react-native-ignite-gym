@@ -1,9 +1,10 @@
-import { Center, Text } from "native-base";
+import { VStack } from "native-base";
+import { HomeHeader } from "~/components/HomeHeader";
 
 interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = () => (
-  <Center flex={1}>
-    <Text color="white">Home</Text>
-  </Center>
+  <VStack flex={1}>
+    <HomeHeader />
+  </VStack>
 );
