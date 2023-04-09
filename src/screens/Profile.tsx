@@ -13,6 +13,9 @@ interface ProfileProps {}
 
 export const Profile: React.FC<ProfileProps> = () => {
   const [isPhotoLoading, setIsPhotoLoading] = useState(false);
+  const [userPhoto, setUserPhoto] = useState(
+    "https://github.com/wfl-junior.png",
+  );
 
   async function handleSelectPhoto() {
     const selectedPhoto = await ImagePicker.launchImageLibraryAsync({
@@ -22,7 +25,8 @@ export const Profile: React.FC<ProfileProps> = () => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
     });
 
-    console.log(selectedPhoto);
+    if (selectedPhoto.canceled) return;
+    setUserPhoto(selectedPhoto.assets[0].uri);
   }
 
   return (
@@ -43,7 +47,7 @@ export const Profile: React.FC<ProfileProps> = () => {
             <UserPhoto
               size={photoSize}
               alt="Foto do usuário"
-              source={{ uri: "https://github.com/wfl-junior.png" }}
+              source={{ uri: userPhoto }}
             />
           )}
 
