@@ -2,6 +2,7 @@ import {
   FormControl,
   IInputProps,
   Input as NativeBaseInput,
+  Text,
 } from "native-base";
 
 export interface InputProps extends IInputProps {
@@ -26,15 +27,11 @@ export const Input: React.FC<InputProps> = ({
         color="white"
         borderWidth={2}
         fontFamily="body"
+        isInvalid={isInvalid}
         placeholderTextColor="gray.300"
+        _invalid={{ borderColor: "red.500" }}
         bg={variant === "primary" ? "gray.700" : "gray.600"}
-        borderColor={
-          errorMessage
-            ? "red.500"
-            : variant === "primary"
-            ? "gray.700"
-            : "gray.600"
-        }
+        borderColor={variant === "primary" ? "gray.700" : "gray.600"}
         _focus={{
           bg: variant === "primary" ? "gray.700" : "gray.600",
           borderColor: "green.500",
@@ -42,7 +39,11 @@ export const Input: React.FC<InputProps> = ({
         {...props}
       />
 
-      <FormControl.ErrorMessage mt={1}>{errorMessage}</FormControl.ErrorMessage>
+      <FormControl.ErrorMessage mt={1}>
+        <Text fontSize="sm" color="red.500">
+          {errorMessage}
+        </Text>
+      </FormControl.ErrorMessage>
     </FormControl>
   );
 };
