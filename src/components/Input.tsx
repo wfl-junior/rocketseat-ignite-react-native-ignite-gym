@@ -2,7 +2,6 @@ import {
   FormControl,
   IInputProps,
   Input as NativeBaseInput,
-  Text,
 } from "native-base";
 
 export interface InputProps extends IInputProps {
@@ -39,10 +38,14 @@ export const Input: React.FC<InputProps> = ({
         {...props}
       />
 
-      <FormControl.ErrorMessage mt={1}>
-        <Text fontSize="sm" color="red.500">
-          {errorMessage}
-        </Text>
+      <FormControl.ErrorMessage
+        mt={1}
+        _text={{
+          color: "red.500",
+          fontSize: "sm",
+        }}
+      >
+        {errorMessage}
       </FormControl.ErrorMessage>
     </FormControl>
   );

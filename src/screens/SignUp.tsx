@@ -28,7 +28,7 @@ export const SignUp: React.FC<SignUpProps> = () => {
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <VStack flex={1} px={10} pb={16}>
+      <VStack flex={1} px={10} pb={12}>
         <Image
           position="absolute"
           resizeMode="contain"
@@ -91,7 +91,7 @@ export const SignUp: React.FC<SignUpProps> = () => {
         </Center>
 
         <Button
-          mt={16}
+          mt={12}
           onPress={goBack}
           variant="outline"
           title="Voltar para o login"
