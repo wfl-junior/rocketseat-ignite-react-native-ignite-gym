@@ -59,6 +59,7 @@ export const SignUp: React.FC<SignUpProps> = () => {
             control={control}
             placeholder="Nome"
             autoCapitalize="words"
+            rules={{ required: "Informe o nome." }}
           />
 
           <InputControlled
