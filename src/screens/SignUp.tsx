@@ -17,7 +17,11 @@ interface SignUpProps {}
 
 export const SignUp: React.FC<SignUpProps> = () => {
   const { goBack } = useAuthStackNavigation();
-  const { control, handleSubmit } = useForm<SignUpFormData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpFormData>({
     defaultValues: {
       name: "",
       email: "",
@@ -61,6 +65,10 @@ export const SignUp: React.FC<SignUpProps> = () => {
             autoCapitalize="words"
             rules={{ required: "Informe o nome." }}
           />
+
+          {errors.name?.message ? (
+            <Text color="white">{errors.name.message}</Text>
+          ) : null}
 
           <InputControlled
             name="email"
