@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Center, Heading, Image, ScrollView, Text, VStack } from "native-base";
 import { useForm } from "react-hook-form";
 import backgroundImage from "~/assets/background.png";
@@ -5,19 +6,14 @@ import Logo from "~/assets/logo.svg";
 import { Button } from "~/components/Button";
 import { InputControlled } from "~/components/InputControlled";
 import { useAuthStackNavigation } from "~/hooks/useAuthStackNavigation";
-
-interface SignUpFormData {
-  name: string;
-  email: string;
-  password: string;
-  passwordConfirmation: string;
-}
+import { SignUpFormData, signUpValidationSchema } from "~/validation/sign-up";
 
 interface SignUpProps {}
 
 export const SignUp: React.FC<SignUpProps> = () => {
   const { goBack } = useAuthStackNavigation();
   const { control, handleSubmit } = useForm<SignUpFormData>({
+    resolver: yupResolver(signUpValidationSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -59,7 +55,6 @@ export const SignUp: React.FC<SignUpProps> = () => {
             control={control}
             placeholder="Nome"
             autoCapitalize="words"
-            rules={{ required: "Informe o nome" }}
           />
 
           <InputControlled
@@ -68,13 +63,6 @@ export const SignUp: React.FC<SignUpProps> = () => {
             placeholder="E-mail"
             autoCapitalize="none"
             keyboardType="email-address"
-            rules={{
-              required: "Informe o e-mail",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "E-mail inválido",
-              },
-            }}
           />
 
           <InputControlled
