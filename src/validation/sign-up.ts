@@ -6,8 +6,10 @@ export const signUpValidationSchema = yup.object({
   password: yup
     .string()
     .required("Informe a senha")
-    .min(6, "A senha deve conter no mínimo 6 caracteres"),
-  passwordConfirmation: yup.string().required("Confirme a senha"),
+    .min(8, "A senha deve conter no mínimo ${min} caracteres"),
+  passwordConfirmation: yup
+    .string()
+    .oneOf([yup.ref("password")], "A confirmação da senha está incorreta"),
 });
 
 export type SignUpFormData = yup.InferType<typeof signUpValidationSchema>;
