@@ -63,11 +63,11 @@ export const SignUp: React.FC<SignUpProps> = () => {
             control={control}
             placeholder="Nome"
             autoCapitalize="words"
-            rules={{ required: "Informe o nome." }}
+            rules={{ required: "Informe o nome" }}
           />
 
           {errors.name?.message ? (
-            <Text color="white">{errors.name.message}</Text>
+            <Text color="red.500">{errors.name.message}</Text>
           ) : null}
 
           <InputControlled
@@ -76,7 +76,18 @@ export const SignUp: React.FC<SignUpProps> = () => {
             placeholder="E-mail"
             autoCapitalize="none"
             keyboardType="email-address"
+            rules={{
+              required: "Informe o e-mail",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "E-mail inválido",
+              },
+            }}
           />
+
+          {errors.email?.message ? (
+            <Text color="red.500">{errors.email.message}</Text>
+          ) : null}
 
           <InputControlled
             name="password"
