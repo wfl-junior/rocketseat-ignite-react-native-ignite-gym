@@ -1,4 +1,5 @@
 import { Center, Heading, Image, ScrollView, Text, VStack } from "native-base";
+import { useState } from "react";
 import backgroundImage from "~/assets/background.png";
 import Logo from "~/assets/logo.svg";
 import { Button } from "~/components/Button";
@@ -8,7 +9,20 @@ import { useAuthStackNavigation } from "~/hooks/useAuthStackNavigation";
 interface SignUpProps {}
 
 export const SignUp: React.FC<SignUpProps> = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const { goBack } = useAuthStackNavigation();
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
+  function handleSignUp() {
+    console.log({
+      name,
+      email,
+      password,
+      passwordConfirmation,
+    });
+  }
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -34,23 +48,42 @@ export const SignUp: React.FC<SignUpProps> = () => {
             Crie sua conta
           </Heading>
 
-          <Input placeholder="Nome" autoCapitalize="words" />
+          <Input
+            value={name}
+            placeholder="Nome"
+            autoCapitalize="words"
+            onChangeText={setName}
+          />
 
           <Input
+            value={email}
             placeholder="E-mail"
             autoCapitalize="none"
+            onChangeText={setEmail}
             keyboardType="email-address"
           />
 
-          <Input placeholder="Senha" secureTextEntry autoCapitalize="none" />
-
           <Input
-            placeholder="Confirme a Senha"
             secureTextEntry
+            value={password}
+            placeholder="Senha"
             autoCapitalize="none"
+            onChangeText={setPassword}
           />
 
-          <Button variant="solid" title="Criar e acessar" />
+          <Input
+            secureTextEntry
+            autoCapitalize="none"
+            value={passwordConfirmation}
+            placeholder="Confirme a Senha"
+            onChangeText={setPasswordConfirmation}
+          />
+
+          <Button
+            variant="solid"
+            onPress={handleSignUp}
+            title="Criar e acessar"
+          />
         </Center>
 
         <Button

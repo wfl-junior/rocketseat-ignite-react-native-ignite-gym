@@ -10,7 +10,7 @@ theme.colors.background = THEME.colors.gray[700];
 interface RoutesProps {}
 
 export const Routes: React.FC<RoutesProps> = () => {
-  const isAuthenticated = true;
+  const isAuthenticated = false;
 
   return (
     <Box flex={1} bg="gray.700">
