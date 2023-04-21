@@ -6,11 +6,18 @@ import { Button } from "~/components/Button";
 import { InputControlled } from "~/components/InputControlled";
 import { useAuthStackNavigation } from "~/hooks/useAuthStackNavigation";
 
+interface SignUpFormData {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+}
+
 interface SignUpProps {}
 
 export const SignUp: React.FC<SignUpProps> = () => {
   const { goBack } = useAuthStackNavigation();
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit } = useForm<SignUpFormData>();
 
   const handleSignUp = handleSubmit(async values => {
     console.log(values);
