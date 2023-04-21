@@ -17,7 +17,14 @@ interface SignUpProps {}
 
 export const SignUp: React.FC<SignUpProps> = () => {
   const { goBack } = useAuthStackNavigation();
-  const { control, handleSubmit } = useForm<SignUpFormData>();
+  const { control, handleSubmit } = useForm<SignUpFormData>({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      passwordConfirmation: "",
+    },
+  });
 
   const handleSignUp = handleSubmit(async values => {
     console.log(values);
