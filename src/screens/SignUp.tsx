@@ -1,28 +1,18 @@
 import { Center, Heading, Image, ScrollView, Text, VStack } from "native-base";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import backgroundImage from "~/assets/background.png";
 import Logo from "~/assets/logo.svg";
 import { Button } from "~/components/Button";
-import { Input } from "~/components/Input";
+import { InputControlled } from "~/components/InputControlled";
 import { useAuthStackNavigation } from "~/hooks/useAuthStackNavigation";
 
 interface SignUpProps {}
 
 export const SignUp: React.FC<SignUpProps> = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const { goBack } = useAuthStackNavigation();
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const { control } = useForm();
 
-  function handleSignUp() {
-    console.log({
-      name,
-      email,
-      password,
-      passwordConfirmation,
-    });
-  }
+  function handleSignUp() {}
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -48,35 +38,35 @@ export const SignUp: React.FC<SignUpProps> = () => {
             Crie sua conta
           </Heading>
 
-          <Input
-            value={name}
+          <InputControlled
+            name="name"
+            control={control}
             placeholder="Nome"
             autoCapitalize="words"
-            onChangeText={setName}
           />
 
-          <Input
-            value={email}
+          <InputControlled
+            name="email"
+            control={control}
             placeholder="E-mail"
             autoCapitalize="none"
-            onChangeText={setEmail}
             keyboardType="email-address"
           />
 
-          <Input
+          <InputControlled
+            name="password"
             secureTextEntry
-            value={password}
+            control={control}
             placeholder="Senha"
             autoCapitalize="none"
-            onChangeText={setPassword}
           />
 
-          <Input
+          <InputControlled
             secureTextEntry
+            control={control}
             autoCapitalize="none"
-            value={passwordConfirmation}
+            name="passwordConfirmation"
             placeholder="Confirme a Senha"
-            onChangeText={setPasswordConfirmation}
           />
 
           <Button

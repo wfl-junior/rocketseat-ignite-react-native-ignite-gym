@@ -1,6 +1,6 @@
 import { IInputProps, Input as NativeBaseInput } from "native-base";
 
-interface InputProps extends IInputProps {
+export interface InputProps extends IInputProps {
   variant?: "primary" | "secondary";
 }
 
