@@ -17,11 +17,7 @@ interface SignUpProps {}
 
 export const SignUp: React.FC<SignUpProps> = () => {
   const { goBack } = useAuthStackNavigation();
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignUpFormData>({
+  const { control, handleSubmit } = useForm<SignUpFormData>({
     defaultValues: {
       name: "",
       email: "",
@@ -66,10 +62,6 @@ export const SignUp: React.FC<SignUpProps> = () => {
             rules={{ required: "Informe o nome" }}
           />
 
-          {errors.name?.message ? (
-            <Text color="red.500">{errors.name.message}</Text>
-          ) : null}
-
           <InputControlled
             name="email"
             control={control}
@@ -84,10 +76,6 @@ export const SignUp: React.FC<SignUpProps> = () => {
               },
             }}
           />
-
-          {errors.email?.message ? (
-            <Text color="red.500">{errors.email.message}</Text>
-          ) : null}
 
           <InputControlled
             name="password"

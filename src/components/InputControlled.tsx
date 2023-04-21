@@ -25,11 +25,19 @@ export const InputControlled = <T extends FieldValues>({
 }: InputControlledProps<T>): JSX.Element => {
   const {
     field: { value, onChange },
+    fieldState: { error },
   } = useController({
     name,
     control,
     rules,
   });
 
-  return <Input {...props} value={value} onChangeText={onChange} />;
+  return (
+    <Input
+      {...props}
+      value={value}
+      onChangeText={onChange}
+      errorMessage={error?.message}
+    />
+  );
 };
