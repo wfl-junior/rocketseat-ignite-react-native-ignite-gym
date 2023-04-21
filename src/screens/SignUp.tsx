@@ -10,9 +10,11 @@ interface SignUpProps {}
 
 export const SignUp: React.FC<SignUpProps> = () => {
   const { goBack } = useAuthStackNavigation();
-  const { control } = useForm();
+  const { control, handleSubmit } = useForm();
 
-  function handleSignUp() {}
+  const handleSignUp = handleSubmit(async values => {
+    console.log(values);
+  });
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -64,9 +66,11 @@ export const SignUp: React.FC<SignUpProps> = () => {
           <InputControlled
             secureTextEntry
             control={control}
+            returnKeyType="send"
             autoCapitalize="none"
             name="passwordConfirmation"
             placeholder="Confirme a Senha"
+            onSubmitEditing={handleSignUp}
           />
 
           <Button
