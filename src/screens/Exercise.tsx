@@ -32,7 +32,12 @@ export const Exercise: React.FC<ExerciseProps> = () => {
         </TouchableOpacity>
 
         <HStack mt={3} justifyContent="space-between" alignItems="center">
-          <Heading color="gray.100" fontSize="lg" flexShrink={1}>
+          <Heading
+            fontSize="lg"
+            flexShrink={1}
+            color="gray.100"
+            fontFamily="heading"
+          >
             Puxada frontal
           </Heading>
 

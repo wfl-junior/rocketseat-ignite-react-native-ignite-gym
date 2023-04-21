@@ -90,7 +90,13 @@ export const Profile: React.FC<ProfileProps> = () => {
           )}
 
           <TouchableOpacity activeOpacity={0.6} onPress={handleSelectPhoto}>
-            <Heading color="green.500" fontSize="md" mt={2} mb={8}>
+            <Heading
+              mt={2}
+              mb={8}
+              fontSize="md"
+              color="green.500"
+              fontFamily="heading"
+            >
               Alterar foto
             </Heading>
           </TouchableOpacity>
@@ -111,7 +117,7 @@ export const Profile: React.FC<ProfileProps> = () => {
         </Center>
 
         <VStack px={10} mt={12}>
-          <Heading color="gray.200" fontSize="md" mb={2}>
+          <Heading color="gray.200" fontSize="md" mb={2} fontFamily="heading">
             Alterar senha
           </Heading>
 

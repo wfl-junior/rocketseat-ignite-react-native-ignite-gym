@@ -6,7 +6,7 @@ interface ScreenHeaderProps {
 
 export const ScreenHeader: React.FC<ScreenHeaderProps> = ({ title }) => (
   <Center bg="gray.600" pt={16} pb={5} px={8}>
-    <Heading color="gray.100" fontSize="xl">
+    <Heading color="gray.100" fontSize="xl" fontFamily="heading">
       {title}
     </Heading>
   </Center>

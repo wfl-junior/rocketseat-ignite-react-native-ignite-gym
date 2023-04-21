@@ -18,6 +18,7 @@ export const HistoryCard: React.FC<HistoryCardProps> = () => (
         color="white"
         fontSize="md"
         numberOfLines={1}
+        fontFamily="heading"
         textTransform="capitalize"
       >
         Costas

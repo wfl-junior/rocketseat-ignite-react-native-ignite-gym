@@ -26,7 +26,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
       />
 
       <VStack flex={1}>
-        <Heading color="white" fontSize="lg">
+        <Heading color="white" fontSize="lg" fontFamily="heading">
           {exercise.title}
         </Heading>
 

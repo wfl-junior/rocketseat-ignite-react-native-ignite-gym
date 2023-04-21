@@ -46,7 +46,7 @@ export const SignUp: React.FC<SignUpProps> = () => {
         </Center>
 
         <Center>
-          <Heading color="gray.100" fontSize="xl" mb={6}>
+          <Heading color="gray.100" fontSize="xl" mb={6} fontFamily="heading">
             Crie sua conta
           </Heading>
 

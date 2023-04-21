@@ -27,7 +27,13 @@ export const History: React.FC<HistoryProps> = () => {
         keyExtractor={item => item}
         renderItem={({ item }) => <HistoryCard />}
         renderSectionHeader={({ section }) => (
-          <Heading color="gray.200" fontSize="md" mt={10} mb={3}>
+          <Heading
+            mb={3}
+            mt={10}
+            fontSize="md"
+            color="gray.200"
+            fontFamily="heading"
+          >
             {section.title}
           </Heading>
         )}

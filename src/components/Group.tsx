@@ -27,6 +27,7 @@ export const Group: React.FC<GroupProps> = ({
   >
     <Heading
       fontSize="xs"
+      fontFamily="heading"
       textTransform="uppercase"
       color={isActive ? "green.500" : "gray.200"}
     >
