@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AxiosError } from "axios";
 import {
   Center,
   Heading,
@@ -16,6 +15,7 @@ import { Button } from "~/components/Button";
 import { InputControlled } from "~/components/InputControlled";
 import { useAuthStackNavigation } from "~/hooks/useAuthStackNavigation";
 import { api } from "~/lib/api";
+import { AppError } from "~/utils/AppError";
 import { SignUpFormData, signUpValidationSchema } from "~/validation/sign-up";
 
 interface SignUpProps {}
@@ -41,13 +41,10 @@ export const SignUp: React.FC<SignUpProps> = () => {
     try {
       await api.post("/users", values);
     } catch (error) {
-      let errorMessage = "Não foi possível cadastrar.";
+      let errorMessage = "Não foi possível criar a conta.";
 
-      if (
-        error instanceof AxiosError &&
-        typeof error.response?.data.message === "string"
-      ) {
-        errorMessage = error.response.data.message;
+      if (error instanceof AppError) {
+        errorMessage = error.message;
       }
 
       toast.show({
