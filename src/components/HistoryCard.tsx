@@ -1,8 +1,11 @@
 import { HStack, Heading, Text, VStack } from "native-base";
+import type { ExerciseHistoryDTO } from "~/types/ExerciseHistoryDTO";
 
-interface HistoryCardProps {}
+interface HistoryCardProps {
+  exercise: ExerciseHistoryDTO;
+}
 
-export const HistoryCard: React.FC<HistoryCardProps> = () => (
+export const HistoryCard: React.FC<HistoryCardProps> = ({ exercise }) => (
   <HStack
     px={5}
     py={4}
@@ -21,16 +24,16 @@ export const HistoryCard: React.FC<HistoryCardProps> = () => (
         fontFamily="heading"
         textTransform="capitalize"
       >
-        Costas
+        {exercise.group}
       </Heading>
 
       <Text color="gray.100" fontSize="lg" numberOfLines={1}>
-        Puxada frontal
+        {exercise.name}
       </Text>
     </VStack>
 
     <Text color="gray.300" fontSize="md">
-      08:56
+      {exercise.hour}
     </Text>
   </HStack>
 );
