@@ -21,9 +21,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
         rounded="md"
         resizeMode="cover"
         alt="Imagem do exercício"
-        source={{
-          uri: `${API_BASE_URL}/exercise/thumb/${exercise.thumb}`,
-        }}
+        source={{ uri: `${API_BASE_URL}/exercise/thumb/${exercise.thumb}` }}
       />
 
       <VStack flex={1}>

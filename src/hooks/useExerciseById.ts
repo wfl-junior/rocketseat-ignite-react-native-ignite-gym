@@ -5,21 +5,20 @@ import { api } from "~/lib/api";
 import { ExerciseDTO } from "~/types/ExerciseDTO";
 import { AppError } from "~/utils/AppError";
 
-export function useExercisesByGroup(selectedGroup: string | null) {
+export function useExerciseById(exerciseId: ExerciseDTO["id"]) {
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(true);
-  const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
+  const [exercise, setExercise] = useState<ExerciseDTO | null>(null);
 
   useFocusEffect(
     useCallback(() => {
-      if (!selectedGroup) return;
       setIsLoading(true);
 
       api
-        .get<ExerciseDTO[]>(`/exercises/bygroup/${selectedGroup}`)
-        .then(({ data }) => setExercises(data))
+        .get<ExerciseDTO>(`/exercises/${exerciseId}`)
+        .then(({ data }) => setExercise(data))
         .catch(error => {
-          let errorMessage = "Não foi possível buscar os dados dos exercícios.";
+          let errorMessage = "Não foi possível buscar os dados do exercício.";
 
           if (error instanceof AppError) {
             errorMessage = error.message;
@@ -34,11 +33,11 @@ export function useExercisesByGroup(selectedGroup: string | null) {
           });
         })
         .finally(() => setIsLoading(false));
-    }, [selectedGroup]),
+    }, [exerciseId]),
   );
 
   return {
-    exercises,
+    exercise,
     isLoading,
   };
 }
