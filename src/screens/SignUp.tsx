@@ -13,6 +13,7 @@ import backgroundImage from "~/assets/background.png";
 import Logo from "~/assets/logo.svg";
 import { Button } from "~/components/Button";
 import { InputControlled } from "~/components/InputControlled";
+import { useAuthContext } from "~/contexts/AuthContext";
 import { useAuthStackNavigation } from "~/hooks/useAuthStackNavigation";
 import { api } from "~/lib/api";
 import { AppError } from "~/utils/AppError";
@@ -22,7 +23,8 @@ interface SignUpProps {}
 
 export const SignUp: React.FC<SignUpProps> = () => {
   const toast = useToast();
-  const { goBack, navigate } = useAuthStackNavigation();
+  const { signIn } = useAuthContext();
+  const { goBack } = useAuthStackNavigation();
   const {
     control,
     handleSubmit,
@@ -40,7 +42,11 @@ export const SignUp: React.FC<SignUpProps> = () => {
   const handleSignUp = handleSubmit(async values => {
     try {
       await api.post("/users", values);
-      navigate("signIn");
+
+      await signIn({
+        email: values.email,
+        password: values.password,
+      });
     } catch (error) {
       let errorMessage = "Não foi possível criar a conta.";
 
