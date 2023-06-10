@@ -70,13 +70,13 @@ export const Profile: React.FC<ProfileProps> = () => {
 
       if (
         photoInfo.exists &&
-        photoInfo.size / Math.pow(1024, 2) > 5 /* 5MB */
+        photoInfo.size / Math.pow(1024, 2) > 5 /* 5MiB */
       ) {
         return toast.show({
           placement: "top",
           bgColor: "red.600",
           id: "image-picker-error",
-          title: "Essa imagem é muito grande. Escolha uma de até 5MB.",
+          title: "Essa imagem é muito grande. Escolha uma de até 5MiB.",
         });
       }
 
