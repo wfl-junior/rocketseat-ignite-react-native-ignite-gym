@@ -55,7 +55,6 @@ export const SignUp: React.FC<SignUpProps> = () => {
       }
 
       toast.show({
-        duration: 5000,
         placement: "top",
         bgColor: "red.600",
         title: errorMessage,

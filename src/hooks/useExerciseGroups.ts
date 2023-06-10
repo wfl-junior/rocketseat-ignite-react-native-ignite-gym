@@ -27,11 +27,10 @@ export function useExerciseGroups() {
         }
 
         toast.show({
-          duration: 5000,
           placement: "top",
           bgColor: "red.600",
           title: errorMessage,
-          id: "sign-in-error",
+          id: "get-exercise-groups-error",
         });
       })
       .finally(() => setIsLoading(false));

@@ -26,11 +26,10 @@ export function useExercisesByGroup(selectedGroup: string | null) {
           }
 
           toast.show({
-            duration: 5000,
             placement: "top",
             bgColor: "red.600",
             title: errorMessage,
-            id: "sign-in-error",
+            id: "get-exercises-by-group-error",
           });
         })
         .finally(() => setIsLoading(false));

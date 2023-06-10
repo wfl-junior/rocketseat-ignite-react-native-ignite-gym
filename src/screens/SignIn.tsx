@@ -48,7 +48,6 @@ export const SignIn: React.FC<SignInProps> = () => {
       }
 
       toast.show({
-        duration: 5000,
         placement: "top",
         bgColor: "red.600",
         title: errorMessage,

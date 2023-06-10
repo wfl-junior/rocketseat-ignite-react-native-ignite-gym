@@ -25,11 +25,10 @@ export function useExerciseById(exerciseId: ExerciseDTO["id"]) {
           }
 
           toast.show({
-            duration: 5000,
             placement: "top",
             bgColor: "red.600",
             title: errorMessage,
-            id: "sign-in-error",
+            id: "get-exercise-by-id-error",
           });
         })
         .finally(() => setIsLoading(false));
