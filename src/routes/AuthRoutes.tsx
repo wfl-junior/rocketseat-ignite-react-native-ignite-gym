@@ -5,8 +5,8 @@ import {
 import { SignIn } from "~/screens/SignIn";
 import { SignUp } from "~/screens/SignUp";
 
-type AuthRoutesParamList = {
-  signIn: undefined;
+export type AuthRoutesParamList = {
+  signIn?: { email: string };
   signUp: undefined;
 };
 

@@ -1,14 +1,52 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Center, Heading, Image, ScrollView, Text, VStack } from "native-base";
+import { useForm } from "react-hook-form";
 import backgroundImage from "~/assets/background.png";
 import Logo from "~/assets/logo.svg";
 import { Button } from "~/components/Button";
-import { Input } from "~/components/Input";
+import { InputControlled } from "~/components/InputControlled";
 import { useAuthStackNavigation } from "~/hooks/useAuthStackNavigation";
+import { useAuthStackParams } from "~/hooks/useAuthStackParams";
+import { SignInFormData, signInValidationSchema } from "~/validation/sign-in";
 
 interface SignInProps {}
 
 export const SignIn: React.FC<SignInProps> = () => {
+  // const toast = useToast();
+  const params = useAuthStackParams<"signIn">();
   const { navigate } = useAuthStackNavigation();
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<SignInFormData>({
+    resolver: yupResolver(signInValidationSchema),
+    defaultValues: {
+      email: params?.email ?? "",
+      password: "",
+    },
+  });
+
+  const handleSignIn = handleSubmit(async values => {
+    console.log(values);
+    // try {
+    //   await api.post("/users", values);
+    // } catch (error) {
+    //   let errorMessage = "Não foi possível acessar a conta.";
+
+    //   if (error instanceof AppError) {
+    //     errorMessage = error.message;
+    //   }
+
+    //   toast.show({
+    //     duration: 5000,
+    //     placement: "top",
+    //     bgColor: "red.600",
+    //     title: errorMessage,
+    //     id: "register-error",
+    //   });
+    // }
+  });
 
   function handleCreateAccount() {
     navigate("signUp");
@@ -38,14 +76,28 @@ export const SignIn: React.FC<SignInProps> = () => {
             Acesse sua conta
           </Heading>
 
-          <Input
+          <InputControlled
+            name="email"
+            control={control}
             placeholder="E-mail"
             autoCapitalize="none"
             keyboardType="email-address"
           />
 
-          <Input placeholder="Senha" secureTextEntry autoCapitalize="none" />
-          <Button variant="solid" title="Acessar" />
+          <InputControlled
+            name="password"
+            secureTextEntry
+            control={control}
+            placeholder="Senha"
+            autoCapitalize="none"
+          />
+
+          <Button
+            title="Acessar"
+            variant="solid"
+            onPress={handleSignIn}
+            isLoading={isSubmitting}
+          />
         </Center>
 
         <Center mt={24}>

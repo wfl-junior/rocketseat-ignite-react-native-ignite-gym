@@ -22,7 +22,7 @@ interface SignUpProps {}
 
 export const SignUp: React.FC<SignUpProps> = () => {
   const toast = useToast();
-  const { goBack } = useAuthStackNavigation();
+  const { goBack, navigate } = useAuthStackNavigation();
   const {
     control,
     handleSubmit,
@@ -40,6 +40,7 @@ export const SignUp: React.FC<SignUpProps> = () => {
   const handleSignUp = handleSubmit(async values => {
     try {
       await api.post("/users", values);
+      navigate("signIn", { email: values.email });
     } catch (error) {
       let errorMessage = "Não foi possível criar a conta.";
 
