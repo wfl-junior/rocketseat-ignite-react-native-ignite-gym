@@ -9,7 +9,7 @@ import { SignInFormData } from "~/validation/sign-in";
 interface AuthContextData {
   user: User | undefined;
   isAuthenticated: boolean;
-  signOut: () => Promise<void>;
+  signOut: () => void;
   signIn: (credentials: SignInFormData) => Promise<void>;
 }
 
@@ -31,7 +31,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
     setUser(data.user);
   }, []);
 
-  const signOut: AuthContextData["signOut"] = useCallback(async () => {
+  const signOut: AuthContextData["signOut"] = useCallback(() => {
     setUser(undefined);
   }, []);
 
