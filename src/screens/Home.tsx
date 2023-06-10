@@ -1,9 +1,10 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { FlatList, HStack, Heading, Text, VStack, useToast } from "native-base";
-import { useCallback, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import { ExerciseCard } from "~/components/ExerciseCard";
 import { Group } from "~/components/Group";
 import { HomeHeader } from "~/components/HomeHeader";
+import { Loading } from "~/components/Loading";
 import { useHomeStackNavigation } from "~/hooks/useHomeStackNavigation";
 import { api } from "~/lib/api";
 import type { ExerciseDTO } from "~/types/ExerciseDTO";
@@ -15,11 +16,15 @@ export const Home: React.FC<HomeProps> = () => {
   const toast = useToast();
   const { navigate } = useHomeStackNavigation();
   const [groups, setGroups] = useState<string[]>([]);
+  const [isLoadingGroups, setIsLoadingGroups] = useState(true);
   const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
+  const [isLoadingExercises, setIsLoadingExercises] = useState(true);
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
 
   useFocusEffect(
     useCallback(() => {
+      setIsLoadingGroups(true);
+
       api
         .get<string[]>("/groups")
         .then(({ data }) => {
@@ -41,13 +46,15 @@ export const Home: React.FC<HomeProps> = () => {
             title: errorMessage,
             id: "sign-in-error",
           });
-        });
+        })
+        .finally(() => setIsLoadingGroups(false));
     }, []),
   );
 
   useFocusEffect(
     useCallback(() => {
       if (!selectedGroup) return;
+      setIsLoadingExercises(true);
 
       api
         .get<ExerciseDTO[]>(`/exercises/bygroup/${selectedGroup}`)
@@ -66,7 +73,8 @@ export const Home: React.FC<HomeProps> = () => {
             title: errorMessage,
             id: "sign-in-error",
           });
-        });
+        })
+        .finally(() => setIsLoadingExercises(false));
     }, [selectedGroup]),
   );
 
@@ -86,50 +94,60 @@ export const Home: React.FC<HomeProps> = () => {
     <VStack flex={1}>
       <HomeHeader />
 
-      <FlatList
-        my={10}
-        minH={10}
-        maxH={10}
-        horizontal
-        data={groups}
-        keyExtractor={group => group}
-        _contentContainerStyle={{ px: 8 }}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item: group }) => (
-          <Group
-            name={group}
-            isActive={selectedGroup === group}
-            onPress={handleSelectGroup(group)}
+      {isLoadingGroups ? (
+        <Loading />
+      ) : (
+        <Fragment>
+          <FlatList
+            my={10}
+            minH={10}
+            maxH={10}
+            horizontal
+            data={groups}
+            keyExtractor={group => group}
+            _contentContainerStyle={{ px: 8 }}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item: group }) => (
+              <Group
+                name={group}
+                isActive={selectedGroup === group}
+                onPress={handleSelectGroup(group)}
+              />
+            )}
           />
-        )}
-      />
 
-      <VStack flex={1} px={8}>
-        <HStack justifyContent="space-between" mb={5}>
-          <Heading color="gray.200" fontSize="md" fontFamily="heading">
-            Exercícios
-          </Heading>
+          {isLoadingExercises ? (
+            <Loading />
+          ) : (
+            <VStack flex={1} px={8}>
+              <HStack justifyContent="space-between" mb={5}>
+                <Heading color="gray.200" fontSize="md" fontFamily="heading">
+                  Exercícios
+                </Heading>
 
-          <Text color="gray.200" fontSize="sm">
-            {exercises.length}
-          </Text>
-        </HStack>
+                <Text color="gray.200" fontSize="sm">
+                  {exercises.length}
+                </Text>
+              </HStack>
 
-        <FlatList
-          data={exercises}
-          _contentContainerStyle={{ pb: 20 }}
-          keyExtractor={exercise => exercise.id.toString()}
-          ListEmptyComponent={() => (
-            <Text color="gray.100">Não há exercícios...</Text>
+              <FlatList
+                data={exercises}
+                _contentContainerStyle={{ pb: 20 }}
+                keyExtractor={exercise => exercise.id.toString()}
+                ListEmptyComponent={() => (
+                  <Text color="gray.100">Não há exercícios...</Text>
+                )}
+                renderItem={({ item: exercise }) => (
+                  <ExerciseCard
+                    exercise={exercise}
+                    onPress={handleOpenExerciseDetails(exercise.id)}
+                  />
+                )}
+              />
+            </VStack>
           )}
-          renderItem={({ item: exercise }) => (
-            <ExerciseCard
-              exercise={exercise}
-              onPress={handleOpenExerciseDetails(exercise.id)}
-            />
-          )}
-        />
-      </VStack>
+        </Fragment>
+      )}
     </VStack>
   );
 };
