@@ -42,9 +42,6 @@ interface ProfileProps {}
 export const Profile: React.FC<ProfileProps> = () => {
   const toast = useToast();
   const [isPhotoLoading, setIsPhotoLoading] = useState(false);
-  const [userPhoto, setUserPhoto] = useState(
-    "https://github.com/wfl-junior.png",
-  );
 
   const { user } = useAuthContext();
   const {
@@ -83,8 +80,8 @@ export const Profile: React.FC<ProfileProps> = () => {
       toast.show({
         placement: "top",
         bgColor: "green.700",
+        id: "update-profile",
         title: "Perfil atualizado com sucesso!",
-        id: "update-profile-success",
       });
     } catch (error) {
       let errorMessage = "Não foi possível atualizar o perfil.";
@@ -97,7 +94,7 @@ export const Profile: React.FC<ProfileProps> = () => {
         placement: "top",
         bgColor: "red.600",
         title: errorMessage,
-        id: "update-profile-error",
+        id: "update-profile",
       });
     }
   });
@@ -124,8 +121,8 @@ export const Profile: React.FC<ProfileProps> = () => {
       ) {
         return toast.show({
           placement: "top",
+          id: "image-picker",
           bgColor: "red.600",
-          id: "image-picker-error",
           title: "Essa imagem é muito grande. Escolha uma de até 5MiB.",
         });
       }
@@ -138,13 +135,24 @@ export const Profile: React.FC<ProfileProps> = () => {
         type: imageMimeTypes[extension as keyof typeof imageMimeTypes],
       } as any);
 
-      await api.patchForm("/users/avatar", formData);
+      const { data } = await api.patchForm<{ avatar: string }>(
+        "/users/avatar",
+        formData,
+      );
+
+      storage.set(
+        STORAGE_KEYS.user,
+        JSON.stringify({
+          ...user,
+          avatar: data.avatar,
+        }),
+      );
 
       toast.show({
         placement: "top",
+        id: "image-picker",
         bgColor: "green.700",
         title: "Foto atualizada com sucesso!",
-        id: "update-profile-image-success",
       });
     } catch (error) {
       let errorMessage = "Não foi possível atualizar a foto.";
@@ -155,9 +163,9 @@ export const Profile: React.FC<ProfileProps> = () => {
 
       toast.show({
         placement: "top",
+        id: "image-picker",
         bgColor: "red.600",
         title: errorMessage,
-        id: "image-picker-error",
       });
     } finally {
       setIsPhotoLoading(false);
@@ -179,11 +187,7 @@ export const Profile: React.FC<ProfileProps> = () => {
               startColor="gray.400"
             />
           ) : (
-            <UserPhoto
-              size={photoSize}
-              alt="Foto do usuário"
-              source={{ uri: userPhoto }}
-            />
+            <UserPhoto size={photoSize} alt="Foto do usuário" />
           )}
 
           <TouchableOpacity activeOpacity={0.6} onPress={handleSelectPhoto}>
