@@ -1,6 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { AxiosError } from "axios";
 import { Center, Heading, Image, ScrollView, Text, VStack } from "native-base";
 import { useForm } from "react-hook-form";
+import { Alert } from "react-native";
 import backgroundImage from "~/assets/background.png";
 import Logo from "~/assets/logo.svg";
 import { Button } from "~/components/Button";
@@ -29,10 +31,16 @@ export const SignUp: React.FC<SignUpProps> = () => {
 
   const handleSignUp = handleSubmit(async values => {
     try {
-      const { data } = await api.post("/users", values);
-      console.log(data);
+      await api.post("/users", values);
     } catch (error) {
-      console.error(error);
+      if (error instanceof AxiosError) {
+        return Alert.alert(
+          "Erro",
+          error.response?.data.message ?? error.message,
+        );
+      }
+
+      Alert.alert("Erro", "Não foi possível cadastrar.");
     }
   });
 
