@@ -2,20 +2,20 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useToast } from "native-base";
 import { useCallback, useState } from "react";
 import { api } from "~/lib/api";
-import type { ExerciseHistoryDTO } from "~/types/ExerciseHistoryDTO";
+import type { ExerciseHistorySectionDTO } from "~/types/ExerciseHistoryDTO";
 import { AppError } from "~/utils/AppError";
 
 export function useExerciseHistory() {
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(true);
-  const [history, setHistory] = useState<ExerciseHistoryDTO[]>([]);
+  const [history, setHistory] = useState<ExerciseHistorySectionDTO[]>([]);
 
   useFocusEffect(
     useCallback(() => {
       setIsLoading(true);
 
       api
-        .get<ExerciseHistoryDTO[]>("/history")
+        .get<ExerciseHistorySectionDTO[]>("/history")
         .then(({ data }) => setHistory(data))
         .catch(error => {
           let errorMessage = "Não foi possível buscar os dados do histórico.";

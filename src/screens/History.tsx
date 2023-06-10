@@ -1,5 +1,4 @@
 import { Heading, SectionList, Text, VStack } from "native-base";
-import { useState } from "react";
 import { HistoryCard } from "~/components/HistoryCard";
 import { ScreenHeader } from "~/components/ScreenHeader";
 import { useExerciseHistory } from "~/hooks/useExerciseHistory";
@@ -7,17 +6,6 @@ import { useExerciseHistory } from "~/hooks/useExerciseHistory";
 interface HistoryProps {}
 
 export const History: React.FC<HistoryProps> = () => {
-  const [exercises, setExercises] = useState([
-    {
-      title: "27.08.2022",
-      data: ["Puxada frontal"],
-    },
-    {
-      title: "26.08.2022",
-      data: ["Puxada frontal", "Remada unilateral"],
-    },
-  ]);
-
   const { history } = useExerciseHistory();
 
   return (
@@ -26,8 +14,8 @@ export const History: React.FC<HistoryProps> = () => {
 
       <SectionList
         px={8}
-        sections={exercises}
-        keyExtractor={item => item}
+        sections={history}
+        keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => <HistoryCard />}
         renderSectionHeader={({ section }) => (
           <Heading
@@ -41,7 +29,7 @@ export const History: React.FC<HistoryProps> = () => {
           </Heading>
         )}
         contentContainerStyle={
-          exercises.length ? undefined : { flex: 1, justifyContent: "center" }
+          history.length ? undefined : { flex: 1, justifyContent: "center" }
         }
         ListEmptyComponent={() => (
           <Text color="gray.100" textAlign="center">
