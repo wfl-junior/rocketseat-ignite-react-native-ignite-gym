@@ -50,6 +50,33 @@ export const Home: React.FC<HomeProps> = () => {
     }, []),
   );
 
+  useFocusEffect(
+    useCallback(() => {
+      if (!selectedGroup) return;
+
+      api
+        .get<string[]>(`/exercises/bygroup/${selectedGroup}`)
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch(error => {
+          let errorMessage = "Não foi possível buscar os exercícios.";
+
+          if (error instanceof AppError) {
+            errorMessage = error.message;
+          }
+
+          toast.show({
+            duration: 5000,
+            placement: "top",
+            bgColor: "red.600",
+            title: errorMessage,
+            id: "sign-in-error",
+          });
+        });
+    }, [selectedGroup]),
+  );
+
   function handleSelectGroup(group: string) {
     return () => {
       setSelectedGroup(group);
