@@ -1,8 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AxiosError } from "axios";
-import { Center, Heading, Image, ScrollView, Text, VStack } from "native-base";
+import {
+  Center,
+  Heading,
+  Image,
+  ScrollView,
+  Text,
+  VStack,
+  useToast,
+} from "native-base";
 import { useForm } from "react-hook-form";
-import { Alert } from "react-native";
 import backgroundImage from "~/assets/background.png";
 import Logo from "~/assets/logo.svg";
 import { Button } from "~/components/Button";
@@ -14,6 +21,7 @@ import { SignUpFormData, signUpValidationSchema } from "~/validation/sign-up";
 interface SignUpProps {}
 
 export const SignUp: React.FC<SignUpProps> = () => {
+  const toast = useToast();
   const { goBack } = useAuthStackNavigation();
   const {
     control,
@@ -33,14 +41,22 @@ export const SignUp: React.FC<SignUpProps> = () => {
     try {
       await api.post("/users", values);
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return Alert.alert(
-          "Erro",
-          error.response?.data.message ?? error.message,
-        );
+      let errorMessage = "Não foi possível cadastrar.";
+
+      if (
+        error instanceof AxiosError &&
+        typeof error.response?.data.message === "string"
+      ) {
+        errorMessage = error.response.data.message;
       }
 
-      Alert.alert("Erro", "Não foi possível cadastrar.");
+      toast.show({
+        duration: 5000,
+        placement: "top",
+        bgColor: "red.600",
+        title: errorMessage,
+        id: "register-error",
+      });
     }
   });
 
