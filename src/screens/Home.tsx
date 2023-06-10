@@ -1,9 +1,12 @@
-import { FlatList, HStack, Heading, Text, VStack } from "native-base";
-import { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { FlatList, HStack, Heading, Text, VStack, useToast } from "native-base";
+import { useCallback, useState } from "react";
 import { ExerciseCard } from "~/components/ExerciseCard";
 import { Group } from "~/components/Group";
 import { HomeHeader } from "~/components/HomeHeader";
 import { useHomeStackNavigation } from "~/hooks/useHomeStackNavigation";
+import { api } from "~/lib/api";
+import { AppError } from "~/utils/AppError";
 
 export interface Exercise {
   id: string;
@@ -11,43 +14,43 @@ export interface Exercise {
   description: string;
 }
 
-enum GroupType {
-  Costas = "Costas",
-  Biceps = "Bíceps",
-  Triceps = "Tríceps",
-  Ombro = "Ombro",
-}
-
 interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = () => {
+  const toast = useToast();
   const { navigate } = useHomeStackNavigation();
-  const [groups, setGroups] = useState(() => Object.values(GroupType));
-  const [selectedGroup, setSelectedGroup] = useState(GroupType.Costas);
-  const [exercises, setExercises] = useState<Exercise[]>(() => [
-    {
-      id: "1",
-      title: "Puxada frontal",
-      description: "3 séries x 12 repetições",
-    },
-    {
-      id: "2",
-      title: "Remada curvada",
-      description: "3 séries x 12 repetições",
-    },
-    {
-      id: "3",
-      title: "Remada unilateral",
-      description: "3 séries x 12 repetições",
-    },
-    {
-      id: "4",
-      title: "Levantamento terra",
-      description: "3 séries x 12 repetições",
-    },
-  ]);
+  const [groups, setGroups] = useState<string[]>([]);
+  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
 
-  function handleSelectGroup(group: GroupType) {
+  useFocusEffect(
+    useCallback(() => {
+      api
+        .get<string[]>("/groups")
+        .then(({ data }) => {
+          if (!data.length) return;
+          setGroups(data);
+          setSelectedGroup(data[0]);
+        })
+        .catch(error => {
+          let errorMessage = "Não foi possível buscar os grupos.";
+
+          if (error instanceof AppError) {
+            errorMessage = error.message;
+          }
+
+          toast.show({
+            duration: 5000,
+            placement: "top",
+            bgColor: "red.600",
+            title: errorMessage,
+            id: "sign-in-error",
+          });
+        });
+    }, []),
+  );
+
+  function handleSelectGroup(group: string) {
     return () => {
       setSelectedGroup(group);
     };
@@ -96,6 +99,9 @@ export const Home: React.FC<HomeProps> = () => {
           data={exercises}
           _contentContainerStyle={{ pb: 20 }}
           keyExtractor={exercise => exercise.id}
+          ListEmptyComponent={() => (
+            <Text color="gray.100">Não há exercícios...</Text>
+          )}
           renderItem={({ item: exercise }) => (
             <ExerciseCard
               exercise={exercise}
