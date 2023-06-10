@@ -1,31 +1,36 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { HStack, Heading, Icon, Text, VStack } from "native-base";
 import { TouchableOpacity } from "react-native";
+import { useAuthContext } from "~/contexts/AuthContext";
 import { UserPhoto } from "./UserPhoto";
 
 interface HomeHeaderProps {}
 
-export const HomeHeader: React.FC<HomeHeaderProps> = () => (
-  <HStack bg="gray.600" pt={16} pb={5} px={8} alignItems="center">
-    <UserPhoto
-      mr={4}
-      size={16}
-      alt="Imagem do usuário"
-      source={{ uri: "https://github.com/wfl-junior.png" }}
-    />
+export const HomeHeader: React.FC<HomeHeaderProps> = () => {
+  const { user, signOut } = useAuthContext();
 
-    <VStack flex={1}>
-      <Text color="gray.100" fontSize="md">
-        Olá,
-      </Text>
+  return (
+    <HStack bg="gray.600" pt={16} pb={5} px={8} alignItems="center">
+      <UserPhoto
+        mr={4}
+        size={16}
+        alt="Imagem do usuário"
+        source={{ uri: "https://github.com/wfl-junior.png" }}
+      />
 
-      <Heading color="gray.100" fontSize="md" fontFamily="heading">
-        Wallace Júnior
-      </Heading>
-    </VStack>
+      <VStack flex={1}>
+        <Text color="gray.100" fontSize="md">
+          Olá,
+        </Text>
 
-    <TouchableOpacity>
-      <Icon as={MaterialIcons} name="logout" color="gray.200" size={7} />
-    </TouchableOpacity>
-  </HStack>
-);
+        <Heading color="gray.100" fontSize="md" fontFamily="heading">
+          {user?.name}
+        </Heading>
+      </VStack>
+
+      <TouchableOpacity onPress={signOut}>
+        <Icon as={MaterialIcons} name="logout" color="gray.200" size={7} />
+      </TouchableOpacity>
+    </HStack>
+  );
+};
