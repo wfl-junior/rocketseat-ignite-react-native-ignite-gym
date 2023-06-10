@@ -24,6 +24,18 @@ import { STORAGE_KEYS } from "~/utils/constants";
 import { ProfileFormData, profileValidationSchema } from "~/validation/profile";
 
 const photoSize = 33;
+const imageMimeTypes = {
+  jpg: "image/jpeg",
+  jpeg: "image/jpeg",
+  png: "image/png",
+  gif: "image/gif",
+  svg: "image/svg+xml",
+  webp: "image/webp",
+  bmp: "image/bmp",
+  ico: "image/vnd.microsoft.icon",
+  tiff: "image/tiff",
+  tif: "image/tiff",
+};
 
 interface ProfileProps {}
 
@@ -118,13 +130,34 @@ export const Profile: React.FC<ProfileProps> = () => {
         });
       }
 
-      setUserPhoto(asset.uri);
-    } catch {
+      const extension = asset.uri.split(".").pop()!;
+      const formData = new FormData();
+      formData.append("avatar", {
+        name: `${user?.id}.${extension}`,
+        uri: asset.uri,
+        type: imageMimeTypes[extension as keyof typeof imageMimeTypes],
+      } as any);
+
+      await api.patchForm("/users/avatar", formData);
+
+      toast.show({
+        placement: "top",
+        bgColor: "green.700",
+        title: "Foto atualizada com sucesso!",
+        id: "update-profile-image-success",
+      });
+    } catch (error) {
+      let errorMessage = "Não foi possível atualizar a foto.";
+
+      if (error instanceof AppError) {
+        errorMessage = error.message;
+      }
+
       toast.show({
         placement: "top",
         bgColor: "red.600",
+        title: errorMessage,
         id: "image-picker-error",
-        title: "Ocorreu um erro inesperado.",
       });
     } finally {
       setIsPhotoLoading(false);
