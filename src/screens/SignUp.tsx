@@ -6,13 +6,18 @@ import Logo from "~/assets/logo.svg";
 import { Button } from "~/components/Button";
 import { InputControlled } from "~/components/InputControlled";
 import { useAuthStackNavigation } from "~/hooks/useAuthStackNavigation";
+import { api } from "~/lib/api";
 import { SignUpFormData, signUpValidationSchema } from "~/validation/sign-up";
 
 interface SignUpProps {}
 
 export const SignUp: React.FC<SignUpProps> = () => {
   const { goBack } = useAuthStackNavigation();
-  const { control, handleSubmit } = useForm<SignUpFormData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<SignUpFormData>({
     resolver: yupResolver(signUpValidationSchema),
     defaultValues: {
       name: "",
@@ -23,7 +28,12 @@ export const SignUp: React.FC<SignUpProps> = () => {
   });
 
   const handleSignUp = handleSubmit(async values => {
-    console.log(values);
+    try {
+      const { data } = await api.post("/users", values);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   });
 
   return (
@@ -87,6 +97,7 @@ export const SignUp: React.FC<SignUpProps> = () => {
             variant="solid"
             onPress={handleSignUp}
             title="Criar e acessar"
+            isLoading={isSubmitting}
           />
         </Center>
 
