@@ -13,7 +13,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { TouchableOpacity } from "react-native";
 import { Button } from "~/components/Button";
-import { Input } from "~/components/Input";
 import { InputControlled } from "~/components/InputControlled";
 import { ScreenHeader } from "~/components/ScreenHeader";
 import { UserPhoto } from "~/components/UserPhoto";
@@ -152,25 +151,31 @@ export const Profile: React.FC<ProfileProps> = () => {
             Alterar senha
           </Heading>
 
-          <Input
+          <InputControlled
             secureTextEntry
+            control={control}
             variant="secondary"
             autoCapitalize="none"
+            name="currentPassword"
             placeholder="Senha atual"
           />
 
-          <Input
+          <InputControlled
             secureTextEntry
+            control={control}
+            name="newPassword"
             variant="secondary"
             autoCapitalize="none"
             placeholder="Nova senha"
           />
 
-          <Input
+          <InputControlled
             secureTextEntry
+            control={control}
             variant="secondary"
             returnKeyType="send"
             autoCapitalize="none"
+            name="newPasswordConfirmation"
             placeholder="Confirme a nova senha"
             onSubmitEditing={handleUpdateProfile}
           />
