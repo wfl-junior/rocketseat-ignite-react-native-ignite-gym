@@ -34,6 +34,7 @@ export const Profile: React.FC<ProfileProps> = () => {
   const { user } = useAuthContext();
   const {
     control,
+    handleSubmit,
     formState: { isSubmitting },
   } = useForm<ProfileFormData>({
     resolver: yupResolver(profileValidationSchema),
@@ -46,6 +47,10 @@ export const Profile: React.FC<ProfileProps> = () => {
           name: "",
           email: "",
         },
+  });
+
+  const handleUpdateProfile = handleSubmit(async values => {
+    console.log(values);
   });
 
   async function handleSelectPhoto() {
@@ -77,9 +82,7 @@ export const Profile: React.FC<ProfileProps> = () => {
       }
 
       setUserPhoto(asset.uri);
-    } catch (error) {
-      console.error(error);
-
+    } catch {
       toast.show({
         placement: "top",
         bgColor: "red.600",
@@ -153,7 +156,7 @@ export const Profile: React.FC<ProfileProps> = () => {
             secureTextEntry
             variant="secondary"
             autoCapitalize="none"
-            placeholder="Senha antiga"
+            placeholder="Senha atual"
           />
 
           <Input
@@ -166,11 +169,18 @@ export const Profile: React.FC<ProfileProps> = () => {
           <Input
             secureTextEntry
             variant="secondary"
+            returnKeyType="send"
             autoCapitalize="none"
             placeholder="Confirme a nova senha"
+            onSubmitEditing={handleUpdateProfile}
           />
 
-          <Button title="Atualizar" mt={4} isLoading={isSubmitting} />
+          <Button
+            mt={4}
+            title="Atualizar"
+            isLoading={isSubmitting}
+            onPress={handleUpdateProfile}
+          />
         </VStack>
       </ScrollView>
     </VStack>
