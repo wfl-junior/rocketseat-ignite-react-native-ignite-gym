@@ -27,11 +27,11 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
 
       <VStack flex={1}>
         <Heading color="white" fontSize="lg" fontFamily="heading">
-          {exercise.title}
+          {exercise.name}
         </Heading>
 
         <Text color="gray.200" fontSize="sm" mt={1} numberOfLines={2}>
-          {exercise.description}
+          {exercise.series} séries x {exercise.repetitions} repetições
         </Text>
       </VStack>
 

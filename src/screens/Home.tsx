@@ -50,10 +50,8 @@ export const Home: React.FC<HomeProps> = () => {
       if (!selectedGroup) return;
 
       api
-        .get<string[]>(`/exercises/bygroup/${selectedGroup}`)
-        .then(({ data }) => {
-          console.log(data);
-        })
+        .get<ExerciseDTO[]>(`/exercises/bygroup/${selectedGroup}`)
+        .then(({ data }) => setExercises(data))
         .catch(error => {
           let errorMessage = "Não foi possível buscar os exercícios.";
 
