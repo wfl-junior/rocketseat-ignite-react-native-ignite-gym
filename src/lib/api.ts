@@ -1,12 +1,12 @@
 import axios, { AxiosError } from "axios";
 import { AppError } from "~/utils/AppError";
-import { STORAGE_KEYS } from "~/utils/constants";
+import { API_BASE_URL, STORAGE_KEYS } from "~/utils/constants";
 import { storage } from "./storage";
 
 const accessToken = storage.getString(STORAGE_KEYS.accessToken);
 
 export const api = axios.create({
-  baseURL: "http://192.168.1.32:3333",
+  baseURL: API_BASE_URL,
   headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : undefined,
 });
 

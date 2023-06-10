@@ -2,6 +2,7 @@ import { Entypo } from "@expo/vector-icons";
 import { HStack, Heading, Icon, Image, Text, VStack } from "native-base";
 import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 import type { ExerciseDTO } from "~/types/ExerciseDTO";
+import { API_BASE_URL } from "~/utils/constants";
 
 interface ExerciseCardProps extends TouchableOpacityProps {
   exercise: ExerciseDTO;
@@ -21,7 +22,7 @@ export const ExerciseCard: React.FC<ExerciseCardProps> = ({
         resizeMode="cover"
         alt="Imagem do exercício"
         source={{
-          uri: "https://blog.totalpass.com.br/wp-content/uploads/2022/12/treino-de-costas-remada-unilateral.jpg",
+          uri: `${API_BASE_URL}/exercise/thumb/${exercise.thumb}`,
         }}
       />
 
