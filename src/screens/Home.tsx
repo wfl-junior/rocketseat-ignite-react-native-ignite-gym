@@ -1,82 +1,27 @@
-import { useFocusEffect } from "@react-navigation/native";
-import { FlatList, HStack, Heading, Text, VStack, useToast } from "native-base";
-import { Fragment, useCallback, useState } from "react";
+import { FlatList, HStack, Heading, Text, VStack } from "native-base";
+import { Fragment } from "react";
 import { ExerciseCard } from "~/components/ExerciseCard";
 import { Group } from "~/components/Group";
 import { HomeHeader } from "~/components/HomeHeader";
 import { Loading } from "~/components/Loading";
+import { useExerciseGroups } from "~/hooks/useExerciseGroups";
+import { useExercisesByGroup } from "~/hooks/useExercisesByGroup";
 import { useHomeStackNavigation } from "~/hooks/useHomeStackNavigation";
-import { api } from "~/lib/api";
 import type { ExerciseDTO } from "~/types/ExerciseDTO";
-import { AppError } from "~/utils/AppError";
 
 interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = () => {
-  const toast = useToast();
   const { navigate } = useHomeStackNavigation();
-  const [groups, setGroups] = useState<string[]>([]);
-  const [isLoadingGroups, setIsLoadingGroups] = useState(true);
-  const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
-  const [isLoadingExercises, setIsLoadingExercises] = useState(true);
-  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
+  const {
+    groups,
+    selectedGroup,
+    setSelectedGroup,
+    isLoading: isLoadingGroups,
+  } = useExerciseGroups();
 
-  useFocusEffect(
-    useCallback(() => {
-      setIsLoadingGroups(true);
-
-      api
-        .get<string[]>("/groups")
-        .then(({ data }) => {
-          if (!data.length) return;
-          setGroups(data);
-          setSelectedGroup(data[0]);
-        })
-        .catch(error => {
-          let errorMessage = "Não foi possível buscar os grupos.";
-
-          if (error instanceof AppError) {
-            errorMessage = error.message;
-          }
-
-          toast.show({
-            duration: 5000,
-            placement: "top",
-            bgColor: "red.600",
-            title: errorMessage,
-            id: "sign-in-error",
-          });
-        })
-        .finally(() => setIsLoadingGroups(false));
-    }, []),
-  );
-
-  useFocusEffect(
-    useCallback(() => {
-      if (!selectedGroup) return;
-      setIsLoadingExercises(true);
-
-      api
-        .get<ExerciseDTO[]>(`/exercises/bygroup/${selectedGroup}`)
-        .then(({ data }) => setExercises(data))
-        .catch(error => {
-          let errorMessage = "Não foi possível buscar os exercícios.";
-
-          if (error instanceof AppError) {
-            errorMessage = error.message;
-          }
-
-          toast.show({
-            duration: 5000,
-            placement: "top",
-            bgColor: "red.600",
-            title: errorMessage,
-            id: "sign-in-error",
-          });
-        })
-        .finally(() => setIsLoadingExercises(false));
-    }, [selectedGroup]),
-  );
+  const { exercises, isLoading: isLoadingExercises } =
+    useExercisesByGroup(selectedGroup);
 
   function handleSelectGroup(group: string) {
     return () => {
@@ -84,9 +29,9 @@ export const Home: React.FC<HomeProps> = () => {
     };
   }
 
-  function handleOpenExerciseDetails(id: ExerciseDTO["id"]) {
+  function handleOpenExerciseDetails(exerciseId: ExerciseDTO["id"]) {
     return () => {
-      navigate("exercise", { id });
+      navigate("exercise", { exerciseId });
     };
   }
 

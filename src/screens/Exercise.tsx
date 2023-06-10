@@ -1,5 +1,5 @@
 import { Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   HStack,
   Heading,
@@ -17,13 +17,18 @@ import { Button } from "~/components/Button";
 import type { ExerciseDTO } from "~/types/ExerciseDTO";
 
 export interface ExerciseParams {
-  id: ExerciseDTO["id"];
+  exerciseId: ExerciseDTO["id"];
 }
 
 interface ExerciseProps {}
 
 export const Exercise: React.FC<ExerciseProps> = () => {
   const { goBack } = useNavigation();
+  const { params } = useRoute();
+
+  const { exerciseId } = params as ExerciseParams;
+
+  console.log({ exerciseId });
 
   return (
     <VStack flex={1}>
