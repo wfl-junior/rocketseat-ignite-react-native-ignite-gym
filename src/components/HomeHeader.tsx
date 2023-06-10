@@ -1,6 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { HStack, Heading, Icon, Text, VStack } from "native-base";
 import { TouchableOpacity } from "react-native";
+import userPhotoDefault from "~/assets/userPhotoDefault.png";
 import { useAuthContext } from "~/contexts/AuthContext";
 import { UserPhoto } from "./UserPhoto";
 
@@ -15,7 +16,7 @@ export const HomeHeader: React.FC<HomeHeaderProps> = () => {
         mr={4}
         size={16}
         alt="Imagem do usuário"
-        source={{ uri: "https://github.com/wfl-junior.png" }}
+        source={user?.avatar ? { uri: user.avatar } : userPhotoDefault}
       />
 
       <VStack flex={1}>
