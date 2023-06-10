@@ -1,5 +1,6 @@
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { Box } from "native-base";
+import { useAuthContext } from "~/contexts/AuthContext";
 import { THEME } from "~/theme";
 import { AppRoutes } from "./AppRoutes";
 import { AuthRoutes } from "./AuthRoutes";
@@ -10,7 +11,7 @@ theme.colors.background = THEME.colors.gray[700];
 interface RoutesProps {}
 
 export const Routes: React.FC<RoutesProps> = () => {
-  const isAuthenticated = false;
+  const { isAuthenticated } = useAuthContext();
 
   return (
     <Box flex={1} bg="gray.700">
