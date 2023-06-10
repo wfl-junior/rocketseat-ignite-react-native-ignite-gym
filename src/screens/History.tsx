@@ -2,6 +2,7 @@ import { Heading, SectionList, Text, VStack } from "native-base";
 import { useState } from "react";
 import { HistoryCard } from "~/components/HistoryCard";
 import { ScreenHeader } from "~/components/ScreenHeader";
+import { useExerciseHistory } from "~/hooks/useExerciseHistory";
 
 interface HistoryProps {}
 
@@ -16,6 +17,8 @@ export const History: React.FC<HistoryProps> = () => {
       data: ["Puxada frontal", "Remada unilateral"],
     },
   ]);
+
+  const { history } = useExerciseHistory();
 
   return (
     <VStack flex={1}>
