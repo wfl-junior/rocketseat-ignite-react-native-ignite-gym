@@ -187,7 +187,7 @@ export const Profile: React.FC<ProfileProps> = () => {
               startColor="gray.400"
             />
           ) : (
-            <UserPhoto size={photoSize} alt="Foto do usuário" />
+            <UserPhoto size={photoSize} />
           )}
 
           <TouchableOpacity activeOpacity={0.6} onPress={handleSelectPhoto}>

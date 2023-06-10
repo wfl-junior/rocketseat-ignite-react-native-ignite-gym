@@ -11,7 +11,7 @@ export const HomeHeader: React.FC<HomeHeaderProps> = () => {
 
   return (
     <HStack bg="gray.600" pt={16} pb={5} px={8} alignItems="center">
-      <UserPhoto mr={4} size={16} alt="Imagem do usuário" />
+      <UserPhoto mr={4} size={16} />
 
       <VStack flex={1}>
         <Text color="gray.100" fontSize="md">

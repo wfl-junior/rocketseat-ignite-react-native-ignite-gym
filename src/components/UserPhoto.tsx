@@ -3,7 +3,7 @@ import userPhotoDefault from "~/assets/userPhotoDefault.png";
 import { useAuthContext } from "~/contexts/AuthContext";
 import { API_BASE_URL } from "~/utils/constants";
 
-interface UserPhotoProps extends Omit<IImageProps, "source"> {
+interface UserPhotoProps extends Omit<IImageProps, "source" | "alt"> {
   size: number;
 }
 
@@ -15,6 +15,7 @@ export const UserPhoto: React.FC<UserPhotoProps> = ({ size, ...props }) => {
       rounded="full"
       borderWidth={2}
       borderColor="gray.400"
+      alt="Foto do usuário"
       {...props}
       w={size}
       h={size}
