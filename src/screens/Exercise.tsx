@@ -14,9 +14,10 @@ import BodyIcon from "~/assets/body.svg";
 import RepetiotionsIcon from "~/assets/repetitions.svg";
 import SeriesIcon from "~/assets/series.svg";
 import { Button } from "~/components/Button";
+import type { ExerciseDTO } from "~/types/ExerciseDTO";
 
 export interface ExerciseParams {
-  id: string;
+  id: ExerciseDTO["id"];
 }
 
 interface ExerciseProps {}

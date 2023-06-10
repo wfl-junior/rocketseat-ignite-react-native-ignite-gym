@@ -2,18 +2,18 @@ import { createContext, useCallback, useContext } from "react";
 import { useMMKVObject } from "react-native-mmkv";
 import { api } from "~/lib/api";
 import { storage } from "~/lib/storage";
-import type { User } from "~/types/User";
+import type { UserDTO } from "~/types/UserDTO";
 import { STORAGE_KEYS } from "~/utils/constants";
 import { SignInFormData } from "~/validation/sign-in";
 
 interface SignInResponse {
-  user: User;
+  user: UserDTO;
   token: string;
   refresh_token: string;
 }
 
 interface AuthContextData {
-  user: User | undefined;
+  user: UserDTO | undefined;
   isAuthenticated: boolean;
   signOut: () => void;
   signIn: (credentials: SignInFormData) => Promise<void>;
@@ -30,7 +30,7 @@ interface AuthContextProviderProps {
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
-  const [user, setUser] = useMMKVObject<User>(STORAGE_KEYS.user, storage);
+  const [user, setUser] = useMMKVObject<UserDTO>(STORAGE_KEYS.user, storage);
 
   const signIn: AuthContextData["signIn"] = useCallback(async credentials => {
     const { data } = await api.post<SignInResponse>("/sessions", credentials);

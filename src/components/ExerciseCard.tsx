@@ -1,10 +1,10 @@
 import { Entypo } from "@expo/vector-icons";
 import { HStack, Heading, Icon, Image, Text, VStack } from "native-base";
 import { TouchableOpacity, TouchableOpacityProps } from "react-native";
-import type { Exercise } from "~/screens/Home";
+import type { ExerciseDTO } from "~/types/ExerciseDTO";
 
 interface ExerciseCardProps extends TouchableOpacityProps {
-  exercise: Exercise;
+  exercise: ExerciseDTO;
 }
 
 export const ExerciseCard: React.FC<ExerciseCardProps> = ({

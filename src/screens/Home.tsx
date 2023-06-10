@@ -6,13 +6,8 @@ import { Group } from "~/components/Group";
 import { HomeHeader } from "~/components/HomeHeader";
 import { useHomeStackNavigation } from "~/hooks/useHomeStackNavigation";
 import { api } from "~/lib/api";
+import type { ExerciseDTO } from "~/types/ExerciseDTO";
 import { AppError } from "~/utils/AppError";
-
-export interface Exercise {
-  id: string;
-  title: string;
-  description: string;
-}
 
 interface HomeProps {}
 
@@ -20,7 +15,7 @@ export const Home: React.FC<HomeProps> = () => {
   const toast = useToast();
   const { navigate } = useHomeStackNavigation();
   const [groups, setGroups] = useState<string[]>([]);
-  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
 
   useFocusEffect(
@@ -83,7 +78,7 @@ export const Home: React.FC<HomeProps> = () => {
     };
   }
 
-  function handleOpenExerciseDetails(id: string) {
+  function handleOpenExerciseDetails(id: ExerciseDTO["id"]) {
     return () => {
       navigate("exercise", { id });
     };
@@ -125,7 +120,7 @@ export const Home: React.FC<HomeProps> = () => {
         <FlatList
           data={exercises}
           _contentContainerStyle={{ pb: 20 }}
-          keyExtractor={exercise => exercise.id}
+          keyExtractor={exercise => exercise.id.toString()}
           ListEmptyComponent={() => (
             <Text color="gray.100">Não há exercícios...</Text>
           )}
