@@ -49,7 +49,7 @@ export const Exercise: React.FC<ExerciseProps> = () => {
       toast.show({
         placement: "top",
         bgColor: "green.700",
-        id: "mark-exercise-as-done-error",
+        id: "mark-exercise-as-done-success",
         title: "Parabéns! Exercício registrado no seu histórico.",
       });
 

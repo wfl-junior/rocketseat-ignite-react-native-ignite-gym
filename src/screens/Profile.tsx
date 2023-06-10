@@ -17,6 +17,8 @@ import { InputControlled } from "~/components/InputControlled";
 import { ScreenHeader } from "~/components/ScreenHeader";
 import { UserPhoto } from "~/components/UserPhoto";
 import { useAuthContext } from "~/contexts/AuthContext";
+import { api } from "~/lib/api";
+import { AppError } from "~/utils/AppError";
 import { ProfileFormData, profileValidationSchema } from "~/validation/profile";
 
 const photoSize = 33;
@@ -49,7 +51,33 @@ export const Profile: React.FC<ProfileProps> = () => {
   });
 
   const handleUpdateProfile = handleSubmit(async values => {
-    console.log(values);
+    try {
+      await api.put("/users", {
+        name: values.name,
+        password: values.newPassword,
+        old_password: values.currentPassword,
+      });
+
+      toast.show({
+        placement: "top",
+        bgColor: "green.700",
+        title: "Perfil atualizado com sucesso!",
+        id: "update-profile-success",
+      });
+    } catch (error) {
+      let errorMessage = "Não foi possível atualizar o perfil.";
+
+      if (error instanceof AppError) {
+        errorMessage = error.message;
+      }
+
+      toast.show({
+        placement: "top",
+        bgColor: "red.600",
+        title: errorMessage,
+        id: "update-profile-error",
+      });
+    }
   });
 
   async function handleSelectPhoto() {
