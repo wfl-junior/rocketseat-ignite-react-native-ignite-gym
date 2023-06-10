@@ -18,7 +18,9 @@ import { ScreenHeader } from "~/components/ScreenHeader";
 import { UserPhoto } from "~/components/UserPhoto";
 import { useAuthContext } from "~/contexts/AuthContext";
 import { api } from "~/lib/api";
+import { storage } from "~/lib/storage";
 import { AppError } from "~/utils/AppError";
+import { STORAGE_KEYS } from "~/utils/constants";
 import { ProfileFormData, profileValidationSchema } from "~/validation/profile";
 
 const photoSize = 33;
@@ -57,6 +59,14 @@ export const Profile: React.FC<ProfileProps> = () => {
         password: values.newPassword,
         old_password: values.currentPassword,
       });
+
+      storage.set(
+        STORAGE_KEYS.user,
+        JSON.stringify({
+          ...user,
+          name: values.name,
+        }),
+      );
 
       toast.show({
         placement: "top",
