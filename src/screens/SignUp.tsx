@@ -40,7 +40,7 @@ export const SignUp: React.FC<SignUpProps> = () => {
   const handleSignUp = handleSubmit(async values => {
     try {
       await api.post("/users", values);
-      navigate("signIn", { email: values.email });
+      navigate("signIn");
     } catch (error) {
       let errorMessage = "Não foi possível criar a conta.";
 
@@ -53,7 +53,7 @@ export const SignUp: React.FC<SignUpProps> = () => {
         placement: "top",
         bgColor: "red.600",
         title: errorMessage,
-        id: "register-error",
+        id: "sign-up-error",
       });
     }
   });

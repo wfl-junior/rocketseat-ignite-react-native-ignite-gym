@@ -15,7 +15,6 @@ import { Button } from "~/components/Button";
 import { InputControlled } from "~/components/InputControlled";
 import { useAuthContext } from "~/contexts/AuthContext";
 import { useAuthStackNavigation } from "~/hooks/useAuthStackNavigation";
-import { useAuthStackParams } from "~/hooks/useAuthStackParams";
 import { AppError } from "~/utils/AppError";
 import { SignInFormData, signInValidationSchema } from "~/validation/sign-in";
 
@@ -24,7 +23,6 @@ interface SignInProps {}
 export const SignIn: React.FC<SignInProps> = () => {
   const toast = useToast();
   const { signIn } = useAuthContext();
-  const params = useAuthStackParams<"signIn">();
   const { navigate } = useAuthStackNavigation();
   const {
     control,
@@ -32,8 +30,9 @@ export const SignIn: React.FC<SignInProps> = () => {
     formState: { isSubmitting },
   } = useForm<SignInFormData>({
     resolver: yupResolver(signInValidationSchema),
+
     defaultValues: {
-      email: params?.email ?? "",
+      email: "",
       password: "",
     },
   });
@@ -42,7 +41,7 @@ export const SignIn: React.FC<SignInProps> = () => {
     try {
       await signIn(values);
     } catch (error) {
-      let errorMessage = "Não foi possível acessar a conta.";
+      let errorMessage = "Não foi possível acessar.";
 
       if (error instanceof AppError) {
         errorMessage = error.message;
@@ -53,7 +52,7 @@ export const SignIn: React.FC<SignInProps> = () => {
         placement: "top",
         bgColor: "red.600",
         title: errorMessage,
-        id: "register-error",
+        id: "sign-in-error",
       });
     }
   });
@@ -99,7 +98,9 @@ export const SignIn: React.FC<SignInProps> = () => {
             secureTextEntry
             control={control}
             placeholder="Senha"
+            returnKeyType="send"
             autoCapitalize="none"
+            onSubmitEditing={handleSignIn}
           />
 
           <Button
