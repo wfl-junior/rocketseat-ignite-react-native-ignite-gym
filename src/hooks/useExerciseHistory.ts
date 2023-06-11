@@ -32,7 +32,7 @@ export function useExerciseHistory() {
           });
         })
         .finally(() => setIsLoading(false));
-    }, []),
+    }, [toast]),
   );
 
   return {

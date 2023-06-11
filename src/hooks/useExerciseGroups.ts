@@ -34,7 +34,7 @@ export function useExerciseGroups() {
         });
       })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [toast]);
 
   return {
     groups,

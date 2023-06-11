@@ -32,7 +32,7 @@ export function useExerciseById(exerciseId: ExerciseDTO["id"]) {
           });
         })
         .finally(() => setIsLoading(false));
-    }, [exerciseId]),
+    }, [exerciseId, toast]),
   );
 
   return {

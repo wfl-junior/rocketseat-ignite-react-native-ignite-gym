@@ -33,7 +33,7 @@ export function useExercisesByGroup(selectedGroup: string | null) {
           });
         })
         .finally(() => setIsLoading(false));
-    }, [selectedGroup]),
+    }, [selectedGroup, toast]),
   );
 
   return {

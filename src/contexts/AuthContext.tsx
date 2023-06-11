@@ -64,20 +64,23 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         setUser(undefined);
       })
       .finally(() => setIsFetchingAccessToken(false));
-  }, []);
+  }, [setUser]);
 
-  const signIn: AuthContextData["signIn"] = useCallback(async credentials => {
-    const { data } = await api.post<SignInResponse>("/sessions", credentials);
-    api.defaults.headers.Authorization = `Bearer ${data.token}`;
-    storage.set(STORAGE_KEYS.refreshToken, data.refresh_token);
-    setUser(data.user);
-  }, []);
+  const signIn: AuthContextData["signIn"] = useCallback(
+    async credentials => {
+      const { data } = await api.post<SignInResponse>("/sessions", credentials);
+      api.defaults.headers.Authorization = `Bearer ${data.token}`;
+      storage.set(STORAGE_KEYS.refreshToken, data.refresh_token);
+      setUser(data.user);
+    },
+    [setUser],
+  );
 
   const signOut: AuthContextData["signOut"] = useCallback(() => {
     delete api.defaults.headers.Authorization;
     storage.delete(STORAGE_KEYS.refreshToken);
     setUser(undefined);
-  }, []);
+  }, [setUser]);
 
   return (
     <AuthContext.Provider
