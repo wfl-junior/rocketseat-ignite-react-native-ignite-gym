@@ -1,4 +1,10 @@
-import { createContext, useCallback, useContext } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useMMKVObject } from "react-native-mmkv";
 import { api } from "~/lib/api";
 import { storage } from "~/lib/storage";
@@ -13,9 +19,10 @@ interface SignInResponse {
 }
 
 interface AuthContextData {
-  user: UserDTO | undefined;
-  isAuthenticated: boolean;
   signOut: () => void;
+  isAuthenticated: boolean;
+  user: UserDTO | undefined;
+  isFetchingAccessToken: boolean;
   signIn: (credentials: SignInFormData) => Promise<void>;
 }
 
@@ -30,18 +37,45 @@ interface AuthContextProviderProps {
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   children,
 }) => {
+  const [isFetchingAccessToken, setIsFetchingAccessToken] = useState(true);
   const [user, setUser] = useMMKVObject<UserDTO>(STORAGE_KEYS.user, storage);
+
+  useEffect(() => {
+    const refreshToken = storage.getString(STORAGE_KEYS.refreshToken);
+
+    if (!refreshToken) {
+      setUser(undefined);
+      return setIsFetchingAccessToken(false);
+    }
+
+    api
+      .post<{ token: string; refresh_token: string }>(
+        "/sessions/refresh-token",
+        {
+          refresh_token: refreshToken,
+        },
+      )
+      .then(({ data }) => {
+        storage.set(STORAGE_KEYS.refreshToken, data.refresh_token);
+        api.defaults.headers.Authorization = `Bearer ${data.token}`;
+      })
+      .catch(() => {
+        storage.delete(STORAGE_KEYS.refreshToken);
+        setUser(undefined);
+      })
+      .finally(() => setIsFetchingAccessToken(false));
+  }, []);
 
   const signIn: AuthContextData["signIn"] = useCallback(async credentials => {
     const { data } = await api.post<SignInResponse>("/sessions", credentials);
     api.defaults.headers.Authorization = `Bearer ${data.token}`;
-    storage.set(STORAGE_KEYS.accessToken, data.token);
+    storage.set(STORAGE_KEYS.refreshToken, data.refresh_token);
     setUser(data.user);
   }, []);
 
   const signOut: AuthContextData["signOut"] = useCallback(() => {
     delete api.defaults.headers.Authorization;
-    storage.delete(STORAGE_KEYS.accessToken);
+    storage.delete(STORAGE_KEYS.refreshToken);
     setUser(undefined);
   }, []);
 
@@ -51,6 +85,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         user,
         signIn,
         signOut,
+        isFetchingAccessToken,
         isAuthenticated: Boolean(user),
       }}
     >
